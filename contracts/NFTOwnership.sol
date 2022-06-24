@@ -12,13 +12,13 @@ contract Ownership is ERC721 {
     // Mappring from token ID to the book ID that it represents
     mapping(uint256 => uint256) private _tokenBooks;
 
-    // Mapping from book id to book title
+    // Mapping from book ID to book title
     mapping(uint256 => string) private _bookTitles;
 
     // Mapping from owner to list of owned token IDs
     mapping(address => mapping(uint256 => uint256)) private _ownedTokens;
 
-    // Array with all token ids, used for enumeration
+    // Array with all token IDs, used for enumeration
     uint256[] private _allTokens;
 
     uint256 bookCount;
@@ -48,14 +48,14 @@ contract Ownership is ERC721 {
     }
 
     function transferRight(address to, uint256 tokenId, Right bookRight) public payable returns (uint256) {
-        require(_exists(tokenId), "Current right token doesn't exist");
-        require(to != msg.sender, "Can't create new right to own self");
+        require(_exists(tokenId), "Right token ID doesn't exist");
+        require(to != msg.sender, "Can't create / transfer new right for your own account");
         require(ownerOf(tokenId) == msg.sender, "Sender doesn't own the token");
         if (bookRight == Right.PUBLISH) {
-            require(_tokenRights[tokenId] == Right.OWN, "Current token is not own");
+            require(_tokenRights[tokenId] == Right.OWN, "OWN token is required for publishing right transfer");
         }
         else if (bookRight == Right.READ_ONLY) {
-            require(_tokenRights[tokenId] == Right.PUBLISH, "Current token is not publish");
+            require(_tokenRights[tokenId] <= Right.PUBLISH, "PUBLISH / OWN token is required for reading right transfer");
         }
         uint256 newTokenId = _mintToken(to);
         uint256 currentBookId = _tokenBooks[tokenId];
@@ -65,12 +65,12 @@ contract Ownership is ERC721 {
     }
 
     function tokenRight(uint256 tokenId) public view virtual returns (Right) {
-        require(_exists(tokenId), "ERC721URIStorage: Right query for nonexistent token");
+        require(_exists(tokenId), "ERC721URIStorage: Right query for non-existent token");
         return _tokenRights[tokenId];
     }
 
     function _setTokenRight(uint256 tokenId, Right _tokenRight) internal virtual {
-        require(_exists(tokenId), "ERC721URIStorage: Right set of nonexistent token");
+        require(_exists(tokenId), "ERC721URIStorage: Right set of non-existent token");
         _tokenRights[tokenId] = _tokenRight;
     }
 
@@ -86,7 +86,7 @@ contract Ownership is ERC721 {
     }
 
     function tokenOfOwnerByIndex(address owner, uint256 index) public view virtual returns (uint256) {
-        require(index < balanceOf(owner), "ERC721Enumerable: owner index out of bounds");
+        require(index < balanceOf(owner), "ERC721Enumerable: owner's index out of bounds");
         return _ownedTokens[owner][index];
     }
 
