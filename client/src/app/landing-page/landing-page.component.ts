@@ -33,4 +33,8 @@ export class LandingPageComponent implements OnInit {
       loginPopup.style.visibility = "hidden";
     }
   }
+
+  linkToMetamask(){
+    window.open("https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn", "_blank");
+  }
 }
