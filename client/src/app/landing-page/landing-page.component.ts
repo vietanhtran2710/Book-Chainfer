@@ -10,15 +10,13 @@ export class LandingPageComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    //get button HTML elements
-    const loginBtn = document.getElementById("login-btn");
-    const closeBtn = document.getElementById("close-btn");
+    
   }
 
   //when login button on navbar is clicked
   loginPopupOnClick() {
     const loginPopup = document.getElementById("login-popup");
-    const overlay = document.getElementById("black");
+    const overlay = document.getElementById("black-bg");
     if (loginPopup != null && overlay!=null){
       overlay.style.visibility = "visible";
       loginPopup.style.visibility = "visible";
@@ -27,7 +25,7 @@ export class LandingPageComponent implements OnInit {
 
   closePopup() {
     const loginPopup = document.getElementById("login-popup");
-    const overlay = document.getElementById("black");
+    const overlay = document.getElementById("black-bg");
     if (loginPopup != null && overlay!=null){
       overlay.style.visibility = "hidden";
       loginPopup.style.visibility = "hidden";
