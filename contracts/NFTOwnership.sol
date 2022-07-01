@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
-contract Ownership is ERC721 {
+contract NFTOwnership is ERC721 {
     enum Right{ OWN, PUBLISH, READ_ONLY }
 
     // Optional mapping for token URIs - Book rights
@@ -25,7 +25,6 @@ contract Ownership is ERC721 {
     mapping(uint256 => uint256) private _bookTokenCount;
     mapping(uint256 => mapping(uint256 => uint256)) private _bookTokens;
 
-
     constructor() ERC721("BookOwnership", "BOOK") {
     }
 
@@ -38,7 +37,7 @@ contract Ownership is ERC721 {
         return newTokenId;
     }
 
-    function createBook(string memory title) public payable returns (uint256) {
+    function createBook(string memory title) public returns (uint256) {
         uint newTokenId = _mintToken(msg.sender);
         uint256 bookId = bookCount; bookCount++;
         _bookTitles[bookId] = title;
@@ -47,7 +46,7 @@ contract Ownership is ERC721 {
         return newTokenId;
     }
 
-    function transferRight(address to, uint256 tokenId, Right bookRight) public payable returns (uint256) {
+    function transferRight(address to, uint256 tokenId, Right bookRight) public returns (uint256) {
         require(_exists(tokenId), "Right token ID doesn't exist");
         require(to != msg.sender, "Can't create / transfer new right for your own account");
         require(ownerOf(tokenId) == msg.sender, "Sender doesn't own the token");
@@ -64,7 +63,7 @@ contract Ownership is ERC721 {
         return newTokenId;
     }
 
-    function tokenRight(uint256 tokenId) public view virtual returns (Right) {
+    function getTokenRight(uint256 tokenId) public view virtual returns (Right) {
         require(_exists(tokenId), "ERC721URIStorage: Right query for non-existent token");
         return _tokenRights[tokenId];
     }
@@ -83,6 +82,11 @@ contract Ownership is ERC721 {
         _bookTokenCount[bookId] += 1;
         uint256 length = getBookTokensCount(bookId);
         _bookTokens[bookId][length] = tokenId;
+    }
+
+    function getTokenBook(uint256 tokenId) public view returns (uint256) {
+        require(_exists(tokenId), "ERC721URIStorage: Right query for non-existent token");
+        return _tokenBooks[tokenId];
     }
 
     function tokenOfOwnerByIndex(address owner, uint256 index) public view virtual returns (uint256) {
