@@ -9,7 +9,7 @@ contract NFTOwnership is ERC721 {
     // Optional mapping for token URIs - Book rights
     mapping(uint256 => Right) private _tokenRights;
 
-    // Mappring from token ID to the book ID that it represents
+    // Mapping from token ID to the book ID that it represents
     mapping(uint256 => uint256) private _tokenBooks;
 
     // Mapping from book ID to book title
