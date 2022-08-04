@@ -51,15 +51,18 @@
 
 	<h3 style="text-align: center;">Register with Metamask</h3> 
 	<label for="metamask-address"><b>Metamask Address </b></label><br>
-	<input type="text" placeholder="Enter Metamask Addess" id="metamask-input"><br>
+	<input type="text" placeholder="Enter Metamask Addess" id="metamask-input"
+	[(ngModel)]="registerInfo.address" #address="ngModel" name="address"><br>
 	
 	<label for="fullname"><b>Full Name </b></label><br>
-	<input type="text" placeholder="Enter Full Name" id="fullname-input"><br>
+	<input type="text" placeholder="Enter Full Name" id="fullname-input"
+	[(ngModel)]="registerInfo.fullName" #fullName="ngModel" name="fullName"><br>
 
 	<label for="email"><b>Email </b></label><br>
-	<input type="text" placeholder="Enter Email" id="email-input"><br>
+	<input type="text" placeholder="Enter Email" id="email-input"
+	[(ngModel)]="registerInfo.email" #email="ngModel" name="email"><br>
 
-	<button type="submit" id="register-btn">Confirm</button>
+	<button (click)="register()" type="submit" id="register-btn">Confirm</button>
 </form>
 
 <footer class="footer-classic">
