@@ -1,0 +1,22 @@
+@import url("https://fonts.googleapis.com/css?family=Lora:400,400i|Open+Sans:300,400,600,700,800");
+.navbar {
+    overflow: hidden;
+    justify-content: left;
+    background-color: #333;
+    position: fixed; /* Set the navbar to fixed position */
+    top: 0; /* Position the navbar at the top of the page */
+    width: 100%; /* Full width */
+  }
+
+.navbar a {
+    color: #f2f2f2;
+    text-align: center; 
+    padding: 14px 16px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.navbar a:hover{
+    background: white;
+    color: black;
+}
