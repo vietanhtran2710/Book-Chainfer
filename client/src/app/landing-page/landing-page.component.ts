@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-landing-page',
@@ -7,10 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LandingPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
     
+  }
+
+  registerInfo = {
+    address: "",
+    fullName: "",
+    email: ""
   }
 
   //when login button on navbar is clicked
@@ -31,12 +39,24 @@ export class LandingPageComponent implements OnInit {
     const registerPopup = document.getElementById("register-popup");
     if (loginPopup != null && overlay!=null && registerPopup!=null){
       overlay.style.visibility = "hidden";
-      //loginPopup.style.visibility = "hidden";
       registerPopup.style.visibility = "hidden";
     }
   }
 
-
+  register() {
+    console.log(this.registerInfo);
+    this.userService.createAccount(this.registerInfo).subscribe(
+      (result) => {
+        if (result) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Done',
+            text: 'Account registered successfully'
+          })
+        }
+      }
+    )
+  }
 
   linkToMetamask(){
     window.open("https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn", "_blank");
