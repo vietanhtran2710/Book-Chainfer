@@ -1,5 +1,6 @@
 <div class="navbar">
-    <a (click)=loginPopupOnClick() id="login-btn">Login</a>
+    <a (click)=loginPopupOnClick() id="login-btn">Login with Metamask</a>
+	<a (click)="loginPopupOnClick()" id="register-btn">Register</a>
 </div>
 
 <div class="section banner-full">
@@ -45,6 +46,21 @@
   <button type="button" class="popup-btn" (click)=linkToMetamask()>Don't have Metamask?</button>
 </div>
 
+<form id="register-popup">
+	<button type="button" id="close-btn" (click)=closePopup()>X</button>
+
+	<h3 style="text-align: center;">Register with Metamask</h3> 
+	<label for="metamask-address"><b>Metamask Address </b></label><br>
+	<input type="text" placeholder="Enter Metamask Addess" id="metamask-input"><br>
+	
+	<label for="fullname"><b>Full Name </b></label><br>
+	<input type="text" placeholder="Enter Full Name" id="fullname-input"><br>
+
+	<label for="email"><b>Email </b></label><br>
+	<input type="text" placeholder="Enter Email" id="email-input"><br>
+
+	<button type="submit" id="register-btn">Confirm</button>
+</form>
 
 <footer class="footer-classic">
   <ul class="footer-links list-inline">

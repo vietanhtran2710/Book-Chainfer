@@ -14,7 +14,7 @@
     padding: 14px 16px;
     text-decoration: none;
     cursor: pointer;
-  }
+}
 
 .navbar a:hover{
     background: white;
@@ -79,6 +79,42 @@
 
 .login-popup a {
   text-decoration: none;
+}
+
+#register-popup {
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+  visibility: hidden;
+  width: 450px;
+  height: fit-content;
+  padding: 20px 30px;
+  align-items: center;
+  background-color: white;
+  border-radius: 15px;
+  /*center the popup*/
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#register-popup input {
+  margin-bottom: 10px;
+}
+#register-popup button{
+  margin-top: 10px;
+}
+#register-popup #close-btn{
+  position: absolute;
+  float: right;
+  top: 10px;
+  right: 10px;
+  border: none;
+  border-radius: 25px;
+  outline: none;
+  text-align: center;
 }
 
 body {
