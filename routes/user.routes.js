@@ -16,8 +16,8 @@ module.exports = app => {
     // // Retrieve a single user
     // router.get("/address/:address", user.findOne)
 
-    // // Retrieve user nonce
-    // router.get("/nonce/:address", user.getNonce)
+    // Retrieve user nonce
+    router.get("/nonce/:address", user.getNonce)
 
     // // Edit an user with address
     // router.put("/:address", user.edit)
