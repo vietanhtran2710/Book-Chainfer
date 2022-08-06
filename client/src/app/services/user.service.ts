@@ -13,4 +13,9 @@ export class UserService {
   createAccount(data: any) {
     return this.http.post(baseUrl, data)
   }
+
+  getNonce(address: string) {
+    return this.http.get(`${baseUrl}/nonce/${address}`)
+  }
+
 }
