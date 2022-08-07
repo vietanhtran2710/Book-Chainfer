@@ -16,7 +16,11 @@ export class LandingPageComponent implements OnInit {
 
   constructor(private userService: UserService,
               private authService: AuthService,
-              private router: Router) { }
+              private router: Router) {
+                if (Object.keys(this.authService.currentUserValue).length !== 0) {
+                  this.router.navigate([`/home`])
+                }
+               }
 
   ngOnInit(): void {
     
