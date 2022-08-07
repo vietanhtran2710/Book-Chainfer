@@ -20,3 +20,24 @@
     background: white;
     color: black;
 }
+
+.container {
+    margin-top: 10%;
+}
+#upload-form label {
+    margin-top: 10%;
+}
+#upload-form button {
+    margin-top: 10%;
+}
+#upload-form #close-btn {
+    position: absolute;
+    margin-top: 5%;
+  float: right;
+  top: 1px;
+  right: 10px;
+  border: none;
+  border-radius: 25px;
+  outline: none;
+  text-align: center;
+}
