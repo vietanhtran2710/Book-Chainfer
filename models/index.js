@@ -15,13 +15,13 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
 });
 
 users = require("./user.model")(sequelize, DataTypes)
-// books = require("./book.model")(sequelize, DataTypes)
+books = require("./book.model")(sequelize, DataTypes)
 
-// users.hasMany(books)
+users.hasMany(books)
 
 const db = {
   users,
-//   books
+  books
 };
 
 db.Sequelize = Sequelize;

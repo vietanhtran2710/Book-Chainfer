@@ -25,7 +25,7 @@ exports.signIn = async (req, res) => {
             });
             console.log(address);
             if (address.toLowerCase() === account.address.toLowerCase()) {
-                let token = jwt.sign({ address: account.address, role: account.role }, authConfig.secret, {
+                let token = jwt.sign({ address: account.address }, authConfig.secret, {
                     expiresIn: "1d"
                 })
 
