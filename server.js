@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const db = require("./models");
-db.sequelize.sync({force: true}).then(() => {
+db.sequelize.sync().then(() => {
   console.log("Drop and re-sync db.");
 });
 
@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
 });
 
 require("./routes/user.routes")(app);
-// require("./routes/book.routes")(app);
+require("./routes/book.routes")(app);
 
 const PORT = 8080;
 app.listen(PORT, () => {

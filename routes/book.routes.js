@@ -11,15 +11,11 @@ module.exports = app => {
 
     var storage = multer.diskStorage({
         destination: function (req, file, cb) {
-            // Tạo thư mục với tên là id của phòng trọ để lưu ảnh của phòng trọ
+            console.log("storage")
+            console.log(req, file)
+            // Tạo thư mục để lưu book
             let savePath
-            if (req.roomID) {
-                // For creating new post
-                savePath = path.join(__dirname, `./../../roomImages/${req.roomID}`)
-            } else {
-                // For saving new image to existing room
-                savePath = path.join(__dirname, `./../../roomImages/${req.body.roomID}`)
-            }
+            savePath = path.join(__dirname, `./../bookFiles/`)
 
             if (!fs.existsSync(savePath)) {
                 fs.mkdirSync(savePath, { recursive: true })
@@ -29,9 +25,14 @@ module.exports = app => {
         },
         filename: function (req, file, cb) {
             // Add date to make sure that new file's name isn't duplicated
-            cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname)) // path.extname: add right file extension
+            cb(null, file.fieldname + '-' + req.body.id + '-' + Date.now() + path.extname(file.originalname)) // path.extname: add right file extension
         }
     })
+
+    let test = async (req, res, next) => {
+        console.log(req.body);
+        next()
+    }
 
     upload = multer({ storage, preservePath: true })
   
@@ -39,7 +40,7 @@ module.exports = app => {
     router.post("/", authJwt.verifyToken, upload.any(), book.create);
 
     // Get all books
-    router.get("/", book.getAll)
+    // router.get("/", book.getAll)
   
     app.use('/api/book', router);
   };
