@@ -1,21 +1,67 @@
 <app-navbar></app-navbar>
-
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <div class="container-fluid">
   <div class="row">
-    <div class="col-7">
-      Show all acquired books here.
+    <div class="col-8">
+      <h1>Your uploaded books</h1>
+      <div class="main-box clearfix">
+        <div class="table-responsive">
+          <table class="table user-list">
+            <thead>
+              <tr>
+                <th class="text-center"><span>Name</span></th>
+                <th class="text-center"><span>Author</span></th>
+                <th class="text-center"><span>Publishing right</span></th>
+                <th class="text-center"><span>Reading right</span></th>
+                <th class="text-center"><span>Action</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <span class="user-link">Book name here</span>
+                </td>
+                <td>
+                  <span class="user-link">Author name here</span>
+                </td>
+                <td class="text-center" style="width: 10%;">
+                  <span class="label label-default"><button class="btn btn-primary">Authorize</button></span>
+                </td>
+                <td class="text-center" style="width: 10%;">
+                  <span class="label label-default"><button class="btn btn-primary">Authorize</button></span>
+                </td>
+                <td class="text-center" style="width: 10%;">
+                  <span class="label label-default"><button class="btn btn-primary">Read</button></span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <ul class="pagination pull-right">
+          <li><a href="#"><i class="fa fa-chevron-left"></i></a></li>
+          <li><a href="#">1</a></li>
+          <li><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+          <li><a href="#">4</a></li>
+          <li><a href="#">5</a></li>
+          <li><a href="#"><i class="fa fa-chevron-right"></i></a></li>
+        </ul>
+      </div>
     </div>
-    <div class="col-5">
-      <form [formGroup]="bookModel" (ngSubmit)="uploadBook()" id="upload-form" enctype="multipart/form-data">
-        <label class="form-label" for="file-name">Enter file name</label>
-        <input type="text" class="form-control" id="upload-name" formControlName="name">
-        <label class="form-label" for="author-name">Enter author(s)</label>
-        <input type="text" class="form-control" id="upload-author" formControlName="author">
-        <label class="form-label" for="customFile">Upload pdf file</label>
-        <input #book type="file" class="form-control" id="customFile"
-        (input)="fileChosen($event)"/>
-        <button type="submit">Confirm</button>
-      </form>
+    <div class="col-4">
+      <h1>Upload book</h1>
+      <div class="white-card">
+        <form [formGroup]="bookModel" (ngSubmit)="uploadBook()" id="upload-form" enctype="multipart/form-data">
+          <label class="form-label" for="file-name">Enter file name</label>
+          <input type="text" class="form-control" id="upload-name" formControlName="name">
+          <label class="form-label" for="author-name">Enter author(s)</label>
+          <input type="text" class="form-control" id="upload-author" formControlName="author">
+          <label class="form-label" for="customFile">Upload pdf file</label>
+          <input #book type="file" class="form-control" id="customFile"
+          (input)="fileChosen($event)"/>
+          <button class="btn btn-primary" type="submit">Confirm</button>
+        </form>
+      </div>
     </div>
   </div>
 </div>
