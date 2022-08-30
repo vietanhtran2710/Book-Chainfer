@@ -1,11 +1,11 @@
 <app-navbar></app-navbar>
 
-<div class="container">
+<div class="container-fluid">
   <div class="row">
-    <div class="col">
+    <div class="col-7">
       Show all acquired books here.
     </div>
-    <div class="col">
+    <div class="col-5">
       <form [formGroup]="bookModel" (ngSubmit)="uploadBook()" id="upload-form" enctype="multipart/form-data">
         <label class="form-label" for="file-name">Enter file name</label>
         <input type="text" class="form-control" id="upload-name" formControlName="name">
