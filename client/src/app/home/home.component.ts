@@ -11,6 +11,7 @@ import { BookService } from '../services/book.service';
 export class HomeComponent implements OnInit {
   bookModel: FormGroup
   bookData: any
+  userAddress = ''
 
   constructor(private authService: AuthService,
               private bookService: BookService,
@@ -28,7 +29,7 @@ export class HomeComponent implements OnInit {
   
 
   ngOnInit(): void {
-    
+    this.userAddress = this.authService.currentUserValue.address
   }
 
   logOut() {
@@ -54,9 +55,6 @@ export class HomeComponent implements OnInit {
     formData.append('author', this.bookModel.get('author')!.value);
     formData.append('file', this.bookModel.get('file')!.value);
     formData.append('id', '1');
-    // console.log(formData.get('name'))
-    // console.log(formData.get('author'))
-    // console.log(formData.get('file'))
     this.bookService.uploadForm(formData).subscribe(
       result => { console.log(result) }
     )
