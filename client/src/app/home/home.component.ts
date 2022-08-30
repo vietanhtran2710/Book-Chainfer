@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import Swal from 'sweetalert2';
 import { AuthService } from '../services/auth.service';
 import { BookService } from '../services/book.service';
 
@@ -49,7 +50,13 @@ export class HomeComponent implements OnInit {
       formData.append('id', '1');
       this.bookService.uploadBook(formData).subscribe(
         (result: any) => {
-          console.log(result);
+          if (result.message == "Success") {
+            Swal.fire({
+              icon: 'success',
+              title: 'Done',
+              text: 'Book created successfully'
+            })
+          }
         }
       )
     }
