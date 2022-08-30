@@ -24,7 +24,7 @@
           <li>
             <div class="dropdown">
               <!--Change Account to account address or metamask address-->
-              <button class="dropbtn">Account</button>
+              <button class="dropbtn">Your account: {{userAddress}}</button>
               <div class="dropdown-content">
                 <a href="#">My Books</a>
                 <a href="#">Settings</a>
@@ -59,7 +59,7 @@
         <input type="text" class="form-control" id="upload-author" formControlName="author">
         <label class="form-label" for="customFile">Upload pdf file</label>
         <input #book type="file" class="form-control" id="customFile"
-          (change)=loadBook(book.files)/>
+        (input)="fileChosen($event)"/>
         <button type="submit">Confirm</button>
       </form>
     </div>

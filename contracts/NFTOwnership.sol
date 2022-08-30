@@ -21,7 +21,7 @@ contract NFTOwnership is ERC721 {
     // Array with all token IDs, used for enumeration
     uint256[] private _allTokens;
 
-    uint256 bookCount;
+    uint256 public bookCount;
     mapping(uint256 => uint256) private _bookTokenCount;
     mapping(uint256 => mapping(uint256 => uint256)) private _bookTokens;
 
