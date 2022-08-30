@@ -5,22 +5,17 @@ const sequelize = db.sequelize
 const { Op } = require('sequelize')
 
 exports.create = async (req, res) => {
-    console.log(req.body)
     try {
-        const formData = req.body // các thông tin trong http body
-
-        const bookFileLocalPath = path.join(__dirname, `./../bookFiles/${req.body.id}`) // directory to save room's images
-
+        const formData = req.body
+        const bookFileLocalPath = path.join(__dirname, `./../files/${req.files[0].filename}`) // directory to save book's file
         const book = {
             id: formData.id,
-            authorName: formData.authorName,
+            authorName: formData.author,
             name: formData.name,
-            fileURI: bookFileLocalPath
+            fileURI: bookFileLocalPath,
+            userAddress: req.address
         }
-
-        // Sau đó lưu thông tin bài đăng
         await Book.create(book)
-
         res.status(201).send({ message: 'Success' })
     } catch (err) {
         console.log(err);

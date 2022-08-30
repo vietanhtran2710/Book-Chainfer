@@ -10,8 +10,7 @@ export class BookService {
 
   constructor(private http: HttpClient) { }
 
-  uploadForm(form: FormData) {
-    console.log(form);
+  uploadBook(form: FormData) {
     return this.http.post(baseUrl, form)
   }
 }

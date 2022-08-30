@@ -10,7 +10,7 @@ import { BookService } from '../services/book.service';
 })
 export class HomeComponent implements OnInit {
   bookModel: FormGroup
-  bookData: any
+  file: File | undefined;
   userAddress = ''
 
   constructor(private authService: AuthService,
@@ -26,8 +26,6 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  
-
   ngOnInit(): void {
     this.userAddress = this.authService.currentUserValue.address
   }
@@ -36,28 +34,24 @@ export class HomeComponent implements OnInit {
     this.authService.logout();
   }
 
-  loadBook(file: any) {
-    console.log(file)
-    var reader = new FileReader();
-    this.bookData = file[0]
-    reader.readAsDataURL(file[0]); // read file as data url
-
-    reader.onload = (event) => { // called once readAsDataURL is completed
-      this.bookModel.patchValue({
-        file: event.target!.result // thêm ảnh vào model để tạo FormData
-      })
+  fileChosen(event: any) {
+    if (event.target.value) {
+      this.file = <File>event.target.files[0];
     }
   }
 
   uploadBook() {
     var formData = new FormData();
-    formData.append('name', this.bookModel.get('name')!.value);
-    formData.append('author', this.bookModel.get('author')!.value);
-    formData.append('file', this.bookModel.get('file')!.value);
-    formData.append('id', '1');
-    this.bookService.uploadForm(formData).subscribe(
-      result => { console.log(result) }
-    )
+    if (this.file) {
+      formData.append('file', this.file, this.file.name);
+      formData.append('name', this.bookModel.get('name')!.value);
+      formData.append('author', this.bookModel.get('author')!.value);
+      formData.append('id', '1');
+      this.bookService.uploadBook(formData).subscribe(
+        (result: any) => {
+          console.log(result);
+        }
+      )
+    }
   }
-
 }
