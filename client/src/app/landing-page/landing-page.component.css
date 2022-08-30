@@ -101,12 +101,16 @@
   transform: translate(-50%, -50%);
 }
 
+/* Seperate label of new input with above element */
+#register-popup label{
+  margin-top: 10px;
+}
+/* Stretch input field to full pop-up length */
 #register-popup input {
-  margin-bottom: 10px;
   width: 100%;
 }
 #register-popup button{
-  margin-top: 10px;
+  margin-top: 20px;
 }
 #register-popup #close-btn{
   position: absolute;

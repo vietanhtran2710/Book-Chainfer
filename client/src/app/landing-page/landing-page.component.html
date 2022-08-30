@@ -8,7 +8,8 @@
 		<div class="row">
 			<div class="col-lg-4 justify-content-xs-center">
 				<div class="image" data-aos="flip-right">
-					<img class="img-fluid" src="assets/images/iphone-black.jpg" alt="Iphone-Black">
+					<!-- <a href="https://www.flaticon.com/free-icons/book" title="book icons">Book icons created by Freepik - Flaticon</a> -->
+					<img class="img-fluid" src="assets/images/books.png" alt="Books">
 				</div>
 			</div>
 			<div class="col-lg-8 align-self-center">
@@ -19,7 +20,7 @@
 					<p>
 						The decentralized app that utilizes blockchain
 						<br>to verify, secure publishing right transfer 
-						<br>and allow faster, convenient distribution.
+						<br>and allow fast, convenient distribution.
 					</p>
 				</div>
 			</div>
@@ -41,7 +42,9 @@
 	<h3 style="text-align: center;">Register with Metamask</h3> 
 	<label for="metamask-address"><b>Metamask Address </b></label><br>
 	<input type="text" placeholder="Enter Metamask Addess" id="metamask-input"
-	[(ngModel)]="registerInfo.address" #address="ngModel" name="address"><br>
+	[(ngModel)]="registerInfo.address" #address="ngModel" name="address">
+	<a (click)="linkToMetamask()"style="top: -10px ;margin-bottom: 10px; cursor: pointer; color: orange; text-decoration:underline">
+		Do not have Metamask? Install now!</a><br>
 	
 	<label for="fullname"><b>Full Name </b></label><br>
 	<input type="text" placeholder="Enter Full Name" id="fullname-input"
