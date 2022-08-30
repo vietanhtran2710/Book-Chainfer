@@ -18,14 +18,27 @@
           <li>
             <a class="nav-link">Upload</a>
           </li>
-          <li>
+          <!-- <li>
             <a class="nav-link" (click)="logOut()">Logout</a>
+          </li> -->
+          <li>
+            <div class="dropdown">
+              <button class="dropbtn">Account</button>
+              <div class="dropdown-content">
+                <a href="#">My Books</a>
+                <a href="#">Settings</a>
+                <a class="nav-link" (click)="logOut()" style="color: red;">Logout</a>
+              </div>
+            </div>
           </li>
         </ul>
-        <form class="d-flex">
+
+        
+        
+        <!-- <form class="d-flex">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+        </form> -->
       </div>
     </div>
 </nav>
