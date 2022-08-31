@@ -17,12 +17,12 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr *ngFor="let book of userBooks">
                 <td>
-                  <span class="user-link">Book name here</span>
+                  <span class="user-link">{{book.name}}</span>
                 </td>
                 <td>
-                  <span class="user-link">Author name here</span>
+                  <span class="user-link">{{book.authorName}}</span>
                 </td>
                 <td class="text-center" style="width: 10%;">
                   <span class="label label-default"><button class="btn btn-primary">Authorize</button></span>

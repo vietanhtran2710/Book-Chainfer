@@ -14,6 +14,7 @@ export class HomeComponent implements OnInit {
   bookModel: FormGroup
   file: File | undefined;
   userAddress = ''
+  userBooks: Array<any> = [];
 
   constructor(private authService: AuthService,
               private bookService: BookService,
@@ -30,7 +31,13 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userAddress = this.authService.currentUserValue.address
+    this.userAddress = this.authService.currentUserValue.address;
+    this.bookService.getUserBook(this.userAddress).subscribe(
+      (result: any) => {
+        this.userBooks = result;
+        console.log(this.userBooks);
+      }
+    )
   }
 
   fileChosen(event: any) {
