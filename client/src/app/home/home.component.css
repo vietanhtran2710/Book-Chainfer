@@ -187,3 +187,7 @@
 .table-stats .table-line-plus .status-social-icon {
 	color: #a75d54;
 }
+
+li a {
+	margin-right: 2px;
+}
