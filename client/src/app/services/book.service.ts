@@ -13,4 +13,8 @@ export class BookService {
   uploadBook(form: FormData) {
     return this.http.post(baseUrl, form)
   }
+
+  getUserBook(user: string) {
+    return this.http.get(`${baseUrl}/user/${user}`)
+  }
 }

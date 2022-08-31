@@ -22,3 +22,16 @@ exports.create = async (req, res) => {
         res.status(500).send({ error: err })
     }
 }
+
+exports.getUserBook = async (req, res) => {
+    const address = req.address;
+    Book.findAll({ where: { userAddress: address } })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Error retrieving book with user address=" + address + ", " + err
+            });
+        });
+}
