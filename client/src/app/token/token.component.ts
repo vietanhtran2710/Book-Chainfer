@@ -3,11 +3,11 @@ import { BlockchainService } from '../services/blockchain.service';
 import { AuthService } from '../services/auth.service';
 
 @Component({
-  selector: 'app-owned',
-  templateUrl: './owned.component.html',
-  styleUrls: ['./owned.component.css']
+  selector: 'app-token',
+  templateUrl: './token.component.html',
+  styleUrls: ['./token.component.css']
 })
-export class OwnedComponent implements OnInit {
+export class TokenComponent implements OnInit {
   ownedTokens: Array<any> = [];
   pageUser: string = '';
 
