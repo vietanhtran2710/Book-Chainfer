@@ -37,6 +37,7 @@ export class BlockchainService {
       tokenId?: number;
       bookId?: number;
       bookTitle?: string;
+      right?: number;
     };
     let that = this;
     await this.initWeb3();
@@ -73,7 +74,18 @@ export class BlockchainService {
               for (var i = 0; i < titles.length; i++) {
                 tokensInfo[i].bookTitle = titles[i];
               }
-            return resolve(tokensInfo);
+              let promises: Array<Promise<any>> = [];
+              for (let item of tokensInfo) {
+                promises.push(
+                  that.contract.methods.getTokenRight(item.tokenId).call()
+                );
+              }
+              Promise.all(promises).then(rights => {
+                for (var i = 0; i < rights.length; i++) {
+                  tokensInfo[i].right = rights[i];
+                }
+                return resolve(tokensInfo);
+              })
             })
           })
         });
