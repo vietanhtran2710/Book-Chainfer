@@ -89,6 +89,11 @@ contract NFTOwnership is ERC721 {
         return _tokenBooks[tokenId];
     }
 
+    function getBookTitle(uint256 bookId) public view returns (string memory) {
+        require(bookId < bookCount, "Index Error: bookId out of bounds");
+        return _bookTitles[bookId];
+    }
+
     function tokenOfOwnerByIndex(address owner, uint256 index) public view virtual returns (uint256) {
         require(index < balanceOf(owner), "ERC721Enumerable: owner's index out of bounds");
         return _ownedTokens[owner][index];

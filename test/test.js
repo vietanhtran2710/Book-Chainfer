@@ -1,5 +1,6 @@
 let book = artifacts.require("./NFTOwnership.sol");
 let bookInstance;
+let bookID;
 
 contract('Book Contract', (accounts) => {
     it("Contract deployment", () => {
@@ -39,8 +40,13 @@ contract('Book Contract', (accounts) => {
             return bookInstance.getTokenBook(0)
         })
         .then((bookId) => {
+            bookID = bookId;
             assert(bookId == 0, "Book ID shoule be 0");
-            return bookInstance.getBookTokensCount(bookId);
+            return bookInstance.getBookTitle(bookId)
+        })
+        .then((title) => {
+            assert(title == "Red Dragon", "Book's title should be Red Dragon");
+            return bookInstance.getBookTokensCount(bookID);
         })
         .then((count) => {
             assert(count == 1, "Book's token count should be 1");
