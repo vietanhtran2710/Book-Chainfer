@@ -30,6 +30,7 @@ contract NFTOwnership is ERC721 {
 
     function _mintToken(address to) private returns (uint256) {
         uint256 newTokenId = _allTokens.length;
+        require(!_exists(newTokenId), "ERC721: duplicate tokenId");
         _mint(to, newTokenId);
         require(_exists(newTokenId), "ERC721: token minting failed");
         _addTokenToAllTokensEnumeration(newTokenId);
@@ -89,6 +90,11 @@ contract NFTOwnership is ERC721 {
         return _tokenBooks[tokenId];
     }
 
+    function getBookTitle(uint256 bookId) public view returns (string memory) {
+        require(bookId < bookCount, "Index Error: bookId out of bounds");
+        return _bookTitles[bookId];
+    }
+
     function tokenOfOwnerByIndex(address owner, uint256 index) public view virtual returns (uint256) {
         require(index < balanceOf(owner), "ERC721Enumerable: owner's index out of bounds");
         return _ownedTokens[owner][index];
@@ -105,7 +111,7 @@ contract NFTOwnership is ERC721 {
 
     function _addTokenToOwnerEnumeration(address to, uint256 tokenId) private {
         uint256 length = balanceOf(to);
-        _ownedTokens[to][length] = tokenId;
+        _ownedTokens[to][length - 1] = tokenId;
     }
 
     function _addTokenToAllTokensEnumeration(uint256 tokenId) private {

@@ -40,21 +40,21 @@
 	<button type="button" id="close-btn" (click)=closePopup()>X</button>
 
 	<h3 style="text-align: center;">Register with Metamask</h3> 
-	<label for="metamask-address"><b>Metamask Address </b></label><br>
-	<input type="text" placeholder="Enter Metamask Addess" id="metamask-input"
+	<label class="form-label" for="metamask-address"><b>Metamask Address </b></label>
+	<input class="form-control" type="text" placeholder="Enter Metamask Addess" id="metamask-input"
 	[(ngModel)]="registerInfo.address" #address="ngModel" name="address">
 	<a (click)="linkToMetamask()"style="top: -10px ;margin-bottom: 10px; cursor: pointer; color: orange; text-decoration:underline">
 		Do not have Metamask? Install now!</a><br>
 	
-	<label for="fullname"><b>Full Name </b></label><br>
-	<input type="text" placeholder="Enter Full Name" id="fullname-input"
-	[(ngModel)]="registerInfo.fullName" #fullName="ngModel" name="fullName"><br>
+	<label class="form-label" for="fullname"><b>Full Name </b></label>
+	<input class="form-control" type="text" placeholder="Enter Full Name" id="fullname-input"
+	[(ngModel)]="registerInfo.fullName" #fullName="ngModel" name="fullName">
 
-	<label for="email"><b>Email </b></label><br>
-	<input type="text" placeholder="Enter Email" id="email-input"
-	[(ngModel)]="registerInfo.email" #email="ngModel" name="email"><br>
+	<label class="form-label" for="email"><b>Email </b></label>
+	<input class="form-control" type="text" placeholder="Enter Email" id="email-input"
+	[(ngModel)]="registerInfo.email" #email="ngModel" name="email">
 
-	<button (click)="register()" type="submit" id="register-btn">Confirm</button>
+	<button class="btn btn-primary" (click)="register()" type="submit" id="register-btn">Confirm</button>
 </form>
 
 <footer class="footer-classic">

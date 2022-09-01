@@ -11,6 +11,7 @@ import { TestComponent } from './test/test.component';
 import { HomeComponent } from './home/home.component';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { NavbarComponent } from './navbar/navbar.component';
+import { TokenComponent } from './token/token.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     LandingPageComponent,
     TestComponent,
     HomeComponent,
-    NavbarComponent
+    NavbarComponent,
+    TokenComponent
   ],
   imports: [
     BrowserModule,

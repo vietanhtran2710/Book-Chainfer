@@ -12,9 +12,11 @@ import { BlockchainService } from '../services/blockchain.service';
 })
 export class HomeComponent implements OnInit {
   bookModel: FormGroup
+  authorizeModel: FormGroup
   file: File | undefined;
   userAddress = ''
   userBooks: Array<any> = [];
+  toAddress: string = '';
 
   constructor(private authService: AuthService,
               private bookService: BookService,
@@ -27,6 +29,13 @@ export class HomeComponent implements OnInit {
       name: '',
       author: '',
       file: '',
+    })
+    this.authorizeModel = this.fb.group({
+      toAddress: '',
+      tokenType: '',
+      bookTitle: '',
+      authorName: '',
+      bookId: '',
     })
   }
 
@@ -64,10 +73,28 @@ export class HomeComponent implements OnInit {
                 title: 'Done',
                 text: 'Book created successfully'
               })
+              .then(result => {
+                location.reload();
+              })
             }
           }
         )
       })
     }
+  }
+
+  authorizeToken() {
+    console.log(this.authorizeModel.get('toAddress'))
+  }
+
+  updateModalInfo(type: string, bookInfo: any) {
+    console.log(type, bookInfo)
+    this.authorizeModel.setValue({
+      tokenType: 'publish', 
+      bookTitle: bookInfo.name, 
+      authorName: bookInfo.authorName, 
+      toAddress: this.authorizeModel.get('toAddress')?.value,
+      bookId: bookInfo.id
+    })
   }
 }
