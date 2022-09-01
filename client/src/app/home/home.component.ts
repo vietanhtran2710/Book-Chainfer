@@ -64,6 +64,9 @@ export class HomeComponent implements OnInit {
                 title: 'Done',
                 text: 'Book created successfully'
               })
+              .then(result => {
+                location.reload();
+              })
             }
           }
         )
