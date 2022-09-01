@@ -6,28 +6,32 @@
               <table class="table user-list">
                 <thead>
                   <tr>
-                    <th class="text-center"><span>Name</span></th>
-                    <th class="text-center"><span>Author</span></th>
+                    <th class="text-center"><span>Token ID</span></th>
+                    <th class="text-center"><span>Book ID</span></th>
+                    <th class="text-center"><span>Title</span></th>
                     <th class="text-center"><span>Publishing right</span></th>
                     <th class="text-center"><span>Reading right</span></th>
                     <th class="text-center"><span>Action</span></th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let book of ownedTokens">
-                    <td>
-                      <span class="user-link">{{book.name}}</span>
+                  <tr *ngFor="let info of ownedTokens">
+                    <td style="width: 10%;">
+                      <span class="user-link">{{info.tokenId}}</span>
+                    </td>
+                    <td style="width: 10%;">
+                      <span class="user-link">{{info.bookId}}</span>
                     </td>
                     <td>
-                      <span class="user-link">{{book.authorName}}</span>
-                    </td>
-                    <td class="text-center" style="width: 10%;">
+                        <span class="user-link">{{info.bookTitle}}</span>
+                      </td>
+                    <td class="text-center" style="width: 11%;">
                       <span class="label label-default"><button class="btn btn-primary">Authorize</button></span>
                     </td>
-                    <td class="text-center" style="width: 10%;">
+                    <td class="text-center" style="width: 11%;">
                       <span class="label label-default"><button class="btn btn-primary">Authorize</button></span>
                     </td>
-                    <td class="text-center" style="width: 10%;">
+                    <td class="text-center" style="width: 11%;">
                       <span class="label label-default"><button class="btn btn-primary">Read</button></span>
                     </td>
                   </tr>

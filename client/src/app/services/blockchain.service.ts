@@ -26,10 +26,58 @@ export class BlockchainService {
     let that = this;
     return new Promise((resolve, reject) => {
       that.contract.methods.createBook(name).send({from: currentAccount})
-      .then(function(result: any) {
+      .then((result: any) => {
         return resolve(result);
       })
     })
   }
 
+  async getUserOwnedTokenInfo(account: string) {
+    type TokenInfo = {
+      tokenId?: number;
+      bookId?: number;
+      bookTitle?: string;
+    };
+    let that = this;
+    await this.initWeb3();
+    return new Promise((resolve, reject) => {
+      that.contract.methods.balanceOf(account).call()
+      .then(function(result: any) {
+        let balance = result;
+        let promises: Array<Promise<any>> = []
+        for (let i = 0; i < balance; i++) {
+          promises.push(that.contract.methods.tokenOfOwnerByIndex(account, i).call());
+        }
+        Promise.all(promises).then(values => {
+          let tokensInfo = values.map((id) => {
+            let info: TokenInfo = { tokenId: id };
+            return info
+          });
+          let promises: Array<Promise<any>> = []
+          for (let item of tokensInfo) {
+            promises.push(
+              that.contract.methods.getTokenBook(item.tokenId).call()
+            );
+          }
+          Promise.all(promises).then(values => {
+            for (var i = 0; i < values.length; i++) {
+              tokensInfo[i].bookId = values[i];
+            }
+            let promises: Array<Promise<any>> = [];
+            for (let item of tokensInfo) {
+              promises.push(
+                that.contract.methods.getBookTitle(item.bookId).call()
+              );
+            }
+            Promise.all(promises).then(titles => {
+              for (var i = 0; i < titles.length; i++) {
+                tokensInfo[i].bookTitle = titles[i];
+              }
+            return resolve(tokensInfo);
+            })
+          })
+        });
+      })
+    })
+  }
 }
