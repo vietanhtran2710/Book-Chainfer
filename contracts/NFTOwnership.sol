@@ -30,6 +30,7 @@ contract NFTOwnership is ERC721 {
 
     function _mintToken(address to) private returns (uint256) {
         uint256 newTokenId = _allTokens.length;
+        require(!_exists(newTokenId), "ERC721: duplicate tokenId");
         _mint(to, newTokenId);
         require(_exists(newTokenId), "ERC721: token minting failed");
         _addTokenToAllTokensEnumeration(newTokenId);
@@ -110,7 +111,7 @@ contract NFTOwnership is ERC721 {
 
     function _addTokenToOwnerEnumeration(address to, uint256 tokenId) private {
         uint256 length = balanceOf(to);
-        _ownedTokens[to][length] = tokenId;
+        _ownedTokens[to][length - 1] = tokenId;
     }
 
     function _addTokenToAllTokensEnumeration(uint256 tokenId) private {
