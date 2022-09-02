@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { BlockchainService } from '../services/blockchain.service';
 import { AuthService } from '../services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-token',
@@ -11,15 +13,25 @@ export class TokenComponent implements OnInit {
   ownedTokens: Array<any> = [];
   publishTokens: Array<any> = [];
   readTokens: Array<any> = [];
-  pageUser: string = '';
+  userAddress: string = '';
+  authorizeModel: FormGroup
 
   constructor(
     private blockchainService: BlockchainService,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private fb: FormBuilder
+  ) {
+      this.authorizeModel = this.fb.group({
+        toAddress: '',
+        tokenType: '',
+        bookTitle: '',
+        tokenId: '',
+      })
+  }
 
   ngOnInit(): void {
-    this.pageUser = this.authService.currentUserValue.address;
-    this.blockchainService.getUserOwnedTokenInfo(this.pageUser)
+    this.userAddress = this.authService.currentUserValue.address;
+    this.blockchainService.getUserOwnedTokenInfo(this.userAddress)
     .then((result: any) => {
       console.log(result);
       for (let item of result) {
@@ -28,6 +40,43 @@ export class TokenComponent implements OnInit {
         else this.readTokens.push(item)
       }
     });
+  }
+
+  authorizeToken() {
+    let right;
+    if (this.authorizeModel.get('tokenType')?.value == 'Publish') {
+      right = 1;
+    }
+    else { right = 2; }
+    this.blockchainService.authorizeToken(
+      this.authorizeModel.get('toAddress')?.value,
+      this.authorizeModel.get('tokenId')?.value,
+      right,
+      this.userAddress
+    ).then((result: any) => {
+      if (result) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Done',
+          text: `${this.authorizeModel.get('tokenType')?.value} token created successfully`
+        })
+      }
+    })
+  }
+
+  updateModalInfo(type: number, tokenInfo: any) {
+    console.log(type, tokenInfo)
+    let right;
+    if (type == 1) {
+      right = 'Publish'
+    }
+    else { right = 'Read' }
+    this.authorizeModel.setValue({
+      tokenType: right, 
+      bookTitle: tokenInfo.bookTitle, 
+      toAddress: this.authorizeModel.get('toAddress')?.value,
+      tokenId: tokenInfo.tokenId
+    })
   }
 
 }
