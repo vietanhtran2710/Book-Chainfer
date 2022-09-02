@@ -32,6 +32,16 @@ export class BlockchainService {
     })
   }
 
+  authorizeToken(toAddress: string, tokenId: number, right: number, currentAccount: string) {
+    let that = this;
+    return new Promise((resolve, reject) => {
+      that.contract.methods.transferRight(toAddress, tokenId, right).send({from: currentAccount})
+      .then((result: any) => {
+        return resolve(result);
+      })
+    })
+  }
+
   async getUserOwnedTokenInfo(account: string) {
     type TokenInfo = {
       tokenId?: number;
