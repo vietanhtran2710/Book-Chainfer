@@ -26,10 +26,13 @@
                 </td>
                 <td class="text-center" style="width: 10%;">
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#authorizeModal" 
-                    (click)="updateModalInfo('publish', book)">Authorize</button>
+                    (click)="updateModalInfo(1, book)">Authorize</button>
                 </td>
                 <td class="text-center" style="width: 10%;">
-                  <span class="label label-default"><button class="btn btn-primary">Authorize</button></span>
+                  <span class="label label-default">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#authorizeModal"
+                    (click)="updateModalInfo(2, book)">Authorize</button>
+                  </span>
                 </td>
                 <td class="text-center" style="width: 10%;">
                   <span class="label label-default"><button class="btn btn-primary">Read</button></span>

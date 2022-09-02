@@ -84,13 +84,36 @@ export class HomeComponent implements OnInit {
   }
 
   authorizeToken() {
-    console.log(this.authorizeModel.get('toAddress'))
+    let right;
+    if (this.authorizeModel.get('tokenType')?.value == 'Publish') {
+      right = 1;
+    }
+    else { right = 2; }
+    this.blockchainService.authorizeToken(
+      this.authorizeModel.get('toAddress')?.value,
+      this.authorizeModel.get('bookId')?.value,
+      right,
+      this.userAddress
+    ).then((result: any) => {
+      if (result) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Done',
+          text: `${this.authorizeModel.get('tokenType')?.value} token created successfully`
+        })
+      }
+    })
   }
 
-  updateModalInfo(type: string, bookInfo: any) {
+  updateModalInfo(type: number, bookInfo: any) {
     console.log(type, bookInfo)
+    let right;
+    if (type == 1) {
+      right = 'Publish'
+    }
+    else { right = 'Read' }
     this.authorizeModel.setValue({
-      tokenType: 'publish', 
+      tokenType: right, 
       bookTitle: bookInfo.name, 
       authorName: bookInfo.authorName, 
       toAddress: this.authorizeModel.get('toAddress')?.value,
