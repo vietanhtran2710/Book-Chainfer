@@ -9,6 +9,8 @@ import { AuthService } from '../services/auth.service';
 })
 export class TokenComponent implements OnInit {
   ownedTokens: Array<any> = [];
+  publishTokens: Array<any> = [];
+  readTokens: Array<any> = [];
   pageUser: string = '';
 
   constructor(
@@ -19,7 +21,12 @@ export class TokenComponent implements OnInit {
     this.pageUser = this.authService.currentUserValue.address;
     this.blockchainService.getUserOwnedTokenInfo(this.pageUser)
     .then((result: any) => {
-      this.ownedTokens = result;
+      console.log(result);
+      for (let item of result) {
+        if (item.right == "0") this.ownedTokens.push(item)
+        else if (item.right == "1") this.publishTokens.push(item)
+        else this.readTokens.push(item)
+      }
     });
   }
 
