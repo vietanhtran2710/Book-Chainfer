@@ -31,7 +31,6 @@ exports.signIn = async (req, res) => {
 
                 res.status(202).send({
                     address: account.address,
-                    role: account.role,
                     token
                 })
             } else {
@@ -43,5 +42,33 @@ exports.signIn = async (req, res) => {
     } catch (err) {
         console.log(err);
         res.status(500).send({ error: err })
+    }
+}
+
+exports.verify = async (req, res) => {
+    try {
+        let token = req.header('Authorization').replace('Bearer ', '')
+        const decoded = jwt.verify(token, authConfig.secret)
+        let user = await User.findAll({
+            where: {
+                address: decoded.address
+            }
+        })
+        console.log(user);
+        if (user) {
+            let token = jwt.sign({ address: decoded.address }, authConfig.secret, {
+                expiresIn: "1d"
+            })
+            res.status(202).send({
+                address: decoded.address,
+                token
+            })
+        }
+        else {
+            res.status(401).send({error: 'Invalid token'})
+        }
+    } catch (err) {
+        console.log(err);
+        res.status(401).send({error: 'Invalid token'})
     }
 }

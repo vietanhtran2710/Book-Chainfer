@@ -21,9 +21,9 @@
                       <th class="text-center"><span>Token ID</span></th>
                       <th class="text-center"><span>Book ID</span></th>
                       <th class="text-center"><span>Title</span></th>
-                      <th class="text-center"><span>Publishing right</span></th>
-                      <th class="text-center"><span>Reading right</span></th>
-                      <th class="text-center"><span>Action</span></th>
+                      <th *ngIf="userAddress == pageAddress" class="text-center"><span>Publishing right</span></th>
+                      <th *ngIf="userAddress == pageAddress" class="text-center"><span>Reading right</span></th>
+                      <th *ngIf="userAddress == pageAddress" class="text-center"><span>Action</span></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -37,19 +37,19 @@
                       <td>
                           <span class="user-link">{{info.bookTitle}}</span>
                       </td>
-                      <td class="text-center" style="width: 11%;">
+                      <td *ngIf="userAddress == pageAddress" class="text-center" style="width: 11%;">
                         <span class="label label-default">
                           <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#authorizeModal" 
                           (click)="updateModalInfo(1, info)">Authorize</button>
                         </span>
                       </td>
-                      <td class="text-center" style="width: 11%;">
+                      <td *ngIf="userAddress == pageAddress" class="text-center" style="width: 11%;">
                         <span class="label label-default">
                           <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#authorizeModal" 
                           (click)="updateModalInfo(2, info)">Authorize</button>
                         </span>
                       </td>
-                      <td class="text-center" style="width: 11%;">
+                      <td *ngIf="userAddress == pageAddress" class="text-center" style="width: 11%;">
                         <span class="label label-default">
                           <button class="btn btn-primary">Read</button>
                         </span>
@@ -78,8 +78,8 @@
                       <th class="text-center"><span>Token ID</span></th>
                       <th class="text-center"><span>Book ID</span></th>
                       <th class="text-center"><span>Title</span></th>
-                      <th class="text-center"><span>Reading right</span></th>
-                      <th class="text-center"><span>Action</span></th>
+                      <th *ngIf="userAddress == pageAddress" class="text-center"><span>Reading right</span></th>
+                      <th *ngIf="userAddress == pageAddress" class="text-center"><span>Action</span></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -93,13 +93,13 @@
                       <td>
                           <span class="user-link">{{info.bookTitle}}</span>
                       </td>
-                      <td class="text-center" style="width: 11%;">
+                      <td *ngIf="userAddress == pageAddress" class="text-center" style="width: 11%;">
                         <span class="label label-default">
                           <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#authorizeModal" 
                           (click)="updateModalInfo(2, info)">Authorize</button>
                         </span>
                       </td>
-                      <td class="text-center" style="width: 11%;">
+                      <td *ngIf="userAddress == pageAddress" class="text-center" style="width: 11%;">
                         <span class="label label-default"><button class="btn btn-primary">Read</button></span>
                       </td>
                     </tr>
@@ -126,7 +126,7 @@
                       <th class="text-center"><span>Token ID</span></th>
                       <th class="text-center"><span>Book ID</span></th>
                       <th class="text-center"><span>Title</span></th>
-                      <th class="text-center"><span>Action</span></th>
+                      <th *ngIf="userAddress == pageAddress" class="text-center"><span>Action</span></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -140,7 +140,7 @@
                       <td>
                           <span class="user-link">{{info.bookTitle}}</span>
                       </td>
-                      <td class="text-center" style="width: 11%;">
+                      <td *ngIf="userAddress == pageAddress" class="text-center" style="width: 11%;">
                         <span class="label label-default"><button class="btn btn-primary">Read</button></span>
                       </td>
                     </tr>

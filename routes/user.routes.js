@@ -9,6 +9,9 @@ module.exports = app => {
 
     //Sign in
     router.post("/login", auth.signIn)
+
+    //Verify and refresh token
+    router.get("/token", auth.verify)
   
     // // Retrieve all users
     // router.get("/", user.findAll);
