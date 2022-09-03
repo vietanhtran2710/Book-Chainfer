@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { BookService } from '../services/book.service';
 import { BlockchainService } from '../services/blockchain.service';
@@ -24,6 +26,15 @@ export class HomeComponent implements OnInit {
               private fb: FormBuilder) {
     if (Object.keys(this.authService.currentUserValue).length === 0) {
       window.location.replace('')
+    }
+    else{
+      let that = this;
+      this.authService.verifyToken().pipe(catchError(err => {
+        window.location.replace('')
+        return throwError(err);
+      })).subscribe((data: any) => {
+        that.userAddress = data.address;
+      })
     }
     this.bookModel = this.fb.group({
       name: '',

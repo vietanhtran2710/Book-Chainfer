@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { BlockchainService } from '../services/blockchain.service';
 import { AuthService } from '../services/auth.service';
 import Swal from 'sweetalert2';
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-token',
@@ -21,12 +23,24 @@ export class TokenComponent implements OnInit {
     private authService: AuthService,
     private fb: FormBuilder
   ) {
-      this.authorizeModel = this.fb.group({
-        toAddress: '',
-        tokenType: '',
-        bookTitle: '',
-        tokenId: '',
+    if (Object.keys(this.authService.currentUserValue).length === 0) {
+      window.location.replace('')
+    }
+    else {
+      let that = this;
+      this.authService.verifyToken().pipe(catchError(err => {
+        window.location.replace('')
+        return throwError(err);
+      })).subscribe((data: any) => {
+        that.userAddress = data.address;
       })
+    }
+    this.authorizeModel = this.fb.group({
+      toAddress: '',
+      tokenType: '',
+      bookTitle: '',
+      tokenId: '',
+    })
   }
 
   ngOnInit(): void {

@@ -35,6 +35,17 @@ export class AuthService {
     }));
   }
 
+  verifyToken() {
+    return this.http.get(`${baseUrl}/token`).pipe(map(user => {
+      if (user && (user as any).token) {
+          localStorage.setItem('currentAccount', JSON.stringify(user));
+          this.currentAccountSubject.next(user as any);
+          console.log('Logged in')
+      }
+      return user;
+    }));
+  }
+
   logout() {
     localStorage.removeItem('currentAccount');
     this.currentAccountSubject.next(null as any);
