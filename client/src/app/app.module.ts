@@ -12,6 +12,7 @@ import { HomeComponent } from './home/home.component';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { NavbarComponent } from './navbar/navbar.component';
 import { TokenComponent } from './token/token.component';
+import { ViewComponent } from './view/view.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { TokenComponent } from './token/token.component';
     TestComponent,
     HomeComponent,
     NavbarComponent,
-    TokenComponent
+    TokenComponent,
+    ViewComponent
   ],
   imports: [
     BrowserModule,
