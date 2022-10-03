@@ -14,13 +14,20 @@ const Web3 = require('web3')
 })
 export class LandingPageComponent implements OnInit {
 
-  constructor(private userService: UserService,
-              private authService: AuthService,
-              private router: Router) {
-                if (Object.keys(this.authService.currentUserValue).length !== 0) {
-                  this.router.navigate([`/home`])
-                }
-               }
+  constructor(
+    private userService: UserService,
+    private authService: AuthService,
+    private router: Router) {
+      if (Object.keys(this.authService.currentUserValue).length !== 0) {
+        let that = this;
+        this.authService.verifyToken().pipe(catchError(err => {
+          window.location.replace('')
+          return throwError(err);
+        })).subscribe((data: any) => {
+          this.router.navigate([`/home`])
+        })
+      }
+  }
 
   ngOnInit(): void {
     
