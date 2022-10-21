@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
   userAddress = ''
   userBooks: Array<any> = [];
   toAddress: string = '';
+  loaded = false;
 
   constructor(private authService: AuthService,
               private bookService: BookService,
@@ -56,6 +57,7 @@ export class HomeComponent implements OnInit {
       (result: any) => {
         this.userBooks = result;
         console.log(this.userBooks);
+        this.loaded = true;
       }
     )
   }
