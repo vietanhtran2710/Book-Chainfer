@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 })
 export class ViewComponent implements OnInit {
   pdfSrc!: Uint8Array;
+  bookInfo: any;
 
   constructor(private bookService: BookService,
               private route: ActivatedRoute) {
@@ -24,10 +25,17 @@ export class ViewComponent implements OnInit {
           fileReader.readAsArrayBuffer(tempBlob);                                    
         },
         (err: Error) => {
-            
+            console.log(err);
         }
-      )
+      );
+      this.bookService.getOneBook(bookId).subscribe(
+        (result: any) => {
+          this.bookInfo = result;
+          console.log(this.bookInfo);
+        }
+       )
      })
+     
   }
 
   ngOnInit(): void {

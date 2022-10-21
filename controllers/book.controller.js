@@ -46,3 +46,16 @@ exports.getBookFile = async (req, res) => {
         res.status(404).send({ error: 'Book id not found' })
     }
 }
+
+exports.getOneBook = async (req, res) => {
+    let id = req.params.id;
+    Book.findByPk(id)
+    .then(data => {
+        res.send(data);
+    })
+    .catch(err => {
+        res.status(500).send({
+            message: "Error retrieving book with id=" + id + ", " + err
+        });
+    })
+}

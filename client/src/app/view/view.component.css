@@ -1,3 +1,7 @@
 .container-fluid {
     position:relative;
 }
+
+ul {
+    font-size: x-large;
+}
