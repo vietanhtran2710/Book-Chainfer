@@ -43,6 +43,6 @@ exports.getBookFile = async (req, res) => {
         res.download(book.fileURI); // Set disposition and send it.
     }
     else {
-        res.status(500).send({ error: 'Book id not found' })
+        res.status(404).send({ error: 'Book id not found' })
     }
 }
