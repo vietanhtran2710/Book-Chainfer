@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 global.__basedir = __dirname;
+console.log(__dirname)
 
 const app = express();
 

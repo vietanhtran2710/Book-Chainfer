@@ -2,7 +2,7 @@ const db = require("../models");
 const path = require('path')
 const Book = db.books // chi phí đăng bài
 const sequelize = db.sequelize
-const { Op } = require('sequelize')
+const { Op } = require('sequelize');
 
 exports.create = async (req, res) => {
     try {
@@ -34,4 +34,15 @@ exports.getUserBook = async (req, res) => {
                 message: "Error retrieving book with user address=" + address + ", " + err
             });
         });
+}
+
+exports.getBookFile = async (req, res) => {
+    let id = req.params.id;
+    const book = await Book.findByPk(id);
+    if (book !== null) {
+        res.download(book.fileURI); // Set disposition and send it.
+    }
+    else {
+        res.status(404).send({ error: 'Book id not found' })
+    }
 }

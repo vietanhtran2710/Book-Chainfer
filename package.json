@@ -27,6 +27,7 @@
     "multer": "^1.4.5-lts.1",
     "mysql2": "^2.3.3",
     "sequelize": "^6.21.3",
-    "sweetalert2": "^11.4.24"
+    "sweetalert2": "^11.4.24",
+    "web3": "^1.8.0"
   }
 }

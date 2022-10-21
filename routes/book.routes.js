@@ -1,4 +1,5 @@
 const authJwt = require('../middleware/authJwt')
+const blockchain = require('../middleware/blockchain')
 const imageUpload = require('./fileUpload.js')
 
 module.exports = app => {
@@ -11,6 +12,9 @@ module.exports = app => {
 
     //Get all books owned by an user
     router.get("/user/:address", authJwt.verifyToken, book.getUserBook);
+
+    //Get a book file by id
+    router.get("/download/:id", authJwt.verifyToken, blockchain.verifyUserToken, book.getBookFile);
   
     app.use('/api/book', router);
   };
