@@ -13,6 +13,9 @@ module.exports = app => {
     //Get all books owned by an user
     router.get("/user/:address", authJwt.verifyToken, book.getUserBook);
 
+    //Get one book info by id
+    router.get("/single/:id", authJwt.verifyToken, book.getOneBook);
+
     //Get a book file by id
     router.get("/download/:id", authJwt.verifyToken, blockchain.verifyUserToken, book.getBookFile);
   

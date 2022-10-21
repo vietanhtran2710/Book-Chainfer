@@ -21,4 +21,8 @@ export class BookService {
   getBookFile(bookId: string) {
     return this.http.get(`${baseUrl}/download/${bookId}`, {responseType:`blob`})
   }
+
+  getOneBook(bookId: string) {
+    return this.http.get(`${baseUrl}/single/${bookId}`)
+  }
 }
