@@ -21,7 +21,7 @@ export class LandingPageComponent implements OnInit {
       if (Object.keys(this.authService.currentUserValue).length !== 0) {
         let that = this;
         this.authService.verifyToken().pipe(catchError(err => {
-          window.location.replace('')
+          // window.location.replace('')
           return throwError(err);
         })).subscribe((data: any) => {
           this.router.navigate([`/home`])
