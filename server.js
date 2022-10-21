@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 global.__basedir = __dirname;
+console.log(__dirname)
 
 const app = express();
 
@@ -23,6 +24,11 @@ db.sequelize.sync().then(() => {
 
 app.get("/", (req, res) => {
     res.json({ message: "Server is running" });
+});
+
+app.get('/api/book/download', function(req, res){
+    const file = `${__dirname}/files/1662004024263[-]CV - Tran Viet Anh [ENG].pdf`;
+    res.download(file); // Set disposition and send it.
 });
 
 require("./routes/user.routes")(app);

@@ -17,4 +17,8 @@ export class BookService {
   getUserBook(user: string) {
     return this.http.get(`${baseUrl}/user/${user}`)
   }
+
+  getBookFile(name: string) {
+    return this.http.get(`${baseUrl}/download`, {responseType:`blob`})
+  }
 }
