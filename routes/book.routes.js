@@ -11,6 +11,9 @@ module.exports = app => {
 
     //Get all books owned by an user
     router.get("/user/:address", authJwt.verifyToken, book.getUserBook);
+
+    //Get a book file by id
+    router.get("/download/:id", book.getBookFile);
   
     app.use('/api/book', router);
   };
