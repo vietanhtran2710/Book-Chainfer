@@ -42,6 +42,26 @@ export class BlockchainService {
     })
   }
 
+  getTokenPrice(tokenId: number) {
+    let that = this;
+    return new Promise((resolve, reject) => {
+      that.contract.methods.getTokenPrice(tokenId).call()
+      .then((result: any) => {
+        return resolve(result);
+      })
+    })
+  }
+
+  setTokenPrice(tokenId: number, price: number, account: string) {
+    let that = this;
+    return new Promise((resolve, reject) => {
+      that.contract.methods.setTokenPrice(tokenId, price).send({from: account})
+      .then((result: any) => {
+        return resolve(result);
+      })
+    })
+  }
+
   async getUserOwnedTokenInfo(account: string) {
     type TokenInfo = {
       tokenId?: number;
