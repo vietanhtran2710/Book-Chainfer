@@ -7,8 +7,10 @@ import "./NFTOwnership.sol";
 contract PageToken is ERC20 {
     NFTOwnership nftContract;
 
+    event BuyToken(uint256 newTokenID);
+
     constructor(address _nftContractAddress) ERC20("Page", "PAGE") {
-        _mint(address(this), 100000);
+        _mint(msg.sender, 100000);
         nftContract = NFTOwnership(_nftContractAddress);
     }
 
@@ -19,6 +21,7 @@ contract PageToken is ERC20 {
         address tokenOwner = nftContract.ownerOf(tokenId);
         transfer(tokenOwner, tokenPrice);
         uint256 newTokenId = nftContract.sellReadToken(msg.sender, tokenId);
+        emit BuyToken(newTokenId);
         return newTokenId;
     }
 }

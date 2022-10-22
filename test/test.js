@@ -204,4 +204,68 @@ contract('Book Contract', (accounts) => {
             }
         })
     })
+
+    it("Selling book", async () => {
+        await bookInstance.createBook("Red Dragon", {from: accounts[0]})
+        await bookInstance.setTokenPrice(0, 50, {from: accounts[0]})
+        bookInstance.getTokenPrice(0)
+        .then((price) => {
+            assert(price == 50, "Book price should be 50");
+        })
+    })
+})
+
+contract('Page Contract', (accounts) => {
+    it("Token Info", () => {
+        return pageInstance.name().then((tokenName) => {
+            assert(tokenName == "Page", "Token name should be Page");
+            return pageInstance.symbol().then((tokenSymbol) => {
+                assert(tokenSymbol == "PAGE", "Token symbol should be PAGE");
+            })
+        })
+    })
+
+    it("Balance and transfer", () => {
+        return pageInstance.balanceOf(accounts[0])
+        .then(async (balance) => {
+            assert(balance == 100000, "Balance of admin should be 100000");
+            await pageInstance.transfer(accounts[5], 100);
+            return pageInstance.balanceOf(accounts[0])
+        })
+        .then((balance) => {
+            assert(balance == 100000 - 100, "Balance of admin should be 99900");
+            return pageInstance.balanceOf(accounts[5])
+        })
+        .then((balance) => {
+            assert(balance == 100, "Balance of buyer should be 100");
+        })
+    })
+
+    it("Buying book", async () => {
+        await bookInstance.createBook("Red Dragon", {from: accounts[0]})
+        await bookInstance.setTokenPrice(0, 50, {from: accounts[0]});
+        return bookInstance.getTokenPrice(0).then(result => {
+            assert(result == 50, "Book price should be 50 token");
+            return pageInstance.buyToken(0, {from: accounts[5]})
+        })
+        .then((result) => {
+            console.log(result.logs[1].args);
+            return pageInstance.balanceOf(accounts[5])
+        })
+        .then(result => {
+            assert(result == 50, "Buyer balance should be 50");
+            return pageInstance.balanceOf(accounts[0])
+        })
+        .then(result => {
+            assert(result == 99950, "Seller balance should be 99950");
+            return bookInstance.balanceOf(accounts[5])
+        })
+        .then(result => {
+            assert(result == 1, "Buyer should have 1 token");
+            return bookInstance.getTokenRight(1)
+        })
+        .then(right => {
+            assert(right == 2, "Token right should be READ_ONLY");
+        })
+    })
 })
