@@ -12,7 +12,7 @@ module.exports = app => {
     router.get("/", authJwt.verifyToken, token.getAll);
 
     //Stop selling one token by id
-    router.delete("/:id", authJwt.verifyToken, token.getOneBook);
+    router.delete("/:id", authJwt.verifyToken, token.delete);
   
     app.use('/api/token', router);
   };

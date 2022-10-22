@@ -5,24 +5,32 @@ const { QueryTypes, Op } = require('sequelize');
 
 // Create a new User
 exports.create = async (req, res) => {
-	const tokenData = req.body
-	if (!tokenData.tokenId || !tokenData.bookId) {
+	const tokenData = req.body;
+    console.log(tokenData);
+	if (tokenData.tokenId === undefined || !tokenData.bookId === undefined) {
 		res.status(400).send({
 			message: "A required field is missing!"
 		});
 		return;
 	}
-    try {
-        const token = {
-            id: tokenData.tokenId,
-            bookId: tokenData.bookId,
+    let findToken = await Token.findByPk(tokenData.tokenId);
+    console.log(findToken);
+    if (findToken === null) {
+        try {
+            const token = {
+                id: tokenData.tokenId,
+                bookId: tokenData.bookId,
+            }
+            await Token.create(token)
+            res.status(201).send({ message: 'Create selling token successfully' })
+        } catch (err) {
+            res.status(500).send({
+                error: err.message || "Some error occurred while creating the token."
+            });
         }
-        await Token.create(token)
-        res.status(201).send({ message: 'Create selling token successfully' })
-    } catch (err) {
-        res.status(500).send({
-            error: err.message || "Some error occurred while creating the token."
-        });
+    }
+    else {
+        res.send({message: "Done"})
     }
 }
 
@@ -53,7 +61,7 @@ exports.delete = (req, res) => {
         }
         else {
             res.send({
-                message: `Cannot delete token with id=${id}. Maybe token was not found!`
+                message: `Token was not found!`
             });
         }
     })
