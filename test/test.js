@@ -1,12 +1,23 @@
 let book = artifacts.require("./NFTOwnership.sol");
+let page = artifacts.require("./PageToken.sol");
 let bookInstance;
+let pageInstance;
 let bookID;
 
 contract('Book Contract', (accounts) => {
     it("Contract deployment", () => {
         return book.deployed().then((instance) => {
             bookInstance = instance;
-            assert(bookInstance != undefined, "NFTOwnership should be defined and deployed")
+            assert(bookInstance != undefined, "NFTOwnership should be defined and deployed");
+            return page.deployed()
+        })
+        .then(async (instance) => {
+            pageInstance = instance;
+            assert(pageInstance != undefined, "PAGE token should be defined and deployed");
+            return bookInstance.getContractAdress()
+        })
+        .then(address => {
+            assert(address == pageInstance.address, "PAGE token address should be assigned CONTRACT_ROLE");
         })
     });
 

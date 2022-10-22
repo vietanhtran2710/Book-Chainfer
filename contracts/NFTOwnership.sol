@@ -2,8 +2,13 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
 
-contract NFTOwnership is ERC721 {
+contract NFTOwnership is ERC721, AccessControl {
+    bool isContractSet = false;
+    address public ERC20_CONTRACT_ADDRESS;
+    bytes32 public constant CONTRACT_ROLE = keccak256("CONTRACT");
+
     enum Right{ OWN, PUBLISH, READ_ONLY }
 
     // Optional mapping for token URIs - Book rights
@@ -18,6 +23,9 @@ contract NFTOwnership is ERC721 {
     // Mapping from owner to list of owned token IDs
     mapping(address => mapping(uint256 => uint256)) private _ownedTokens;
 
+    //Mapping from token id to its selling price
+    mapping(uint256 => uint256) private _tokenPrices;
+
     // Array with all token IDs, used for enumeration
     uint256[] private _allTokens;
 
@@ -26,6 +34,26 @@ contract NFTOwnership is ERC721 {
     mapping(uint256 => mapping(uint256 => uint256)) private _bookTokens;
 
     constructor() ERC721("BookOwnership", "BOOK") {
+        _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
+    }
+
+    function setContract(address _address)
+        public
+        onlyRole(DEFAULT_ADMIN_ROLE)
+        returns (address)
+    {
+        require(
+            (isContractSet == false) && (_address != address(0)),
+            "Only set once"
+        );
+        grantRole(CONTRACT_ROLE, _address);
+        isContractSet = true;
+        ERC20_CONTRACT_ADDRESS = _address;
+        return ERC20_CONTRACT_ADDRESS;
+    }
+
+    function getContractAdress() public view returns (address) {
+        return ERC20_CONTRACT_ADDRESS;
     }
 
     function _mintToken(address to) private returns (uint256) {
@@ -116,5 +144,27 @@ contract NFTOwnership is ERC721 {
 
     function _addTokenToAllTokensEnumeration(uint256 tokenId) private {
         _allTokens.push(tokenId);
+    }
+
+    function getTokenPrice(uint256 tokenId) public view returns (uint256) {
+        return _tokenPrices[tokenId];
+    }
+
+    function setTokenPrice(uint256 tokenId, uint256 price) public {
+        require(ownerOf(tokenId) == msg.sender, "Sender doesn't own the token");
+        _tokenPrices[tokenId] = price;
+    }
+
+    function sellReadToken(address to, uint256 sellerTokenId) public onlyRole(CONTRACT_ROLE) returns (uint256) {
+        require(_tokenPrices[sellerTokenId] != 0, "Book is not for selling");
+        uint256 newTokenId = _mintToken(to);
+        uint256 currentBookId = _tokenBooks[sellerTokenId];
+        _addTokenToBook(currentBookId, newTokenId);
+        _setTokenRight(newTokenId, Right.READ_ONLY);
+        return newTokenId;
+    }
+
+    function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721, AccessControl) returns (bool) {
+        return super.supportsInterface(interfaceId);
     }
 }
