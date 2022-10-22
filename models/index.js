@@ -16,12 +16,15 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
 
 users = require("./user.model")(sequelize, DataTypes)
 books = require("./book.model")(sequelize, DataTypes)
+tokens = require("./token.model")(sequelize, DataTypes)
 
 users.hasMany(books)
+books.hasMany(tokens)
 
 const db = {
   users,
-  books
+  books,
+  tokens
 };
 
 db.Sequelize = Sequelize;
