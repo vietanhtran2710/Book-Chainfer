@@ -36,7 +36,9 @@
                   </span>
                 </td>
                 <td class="text-center" style="width: 10%;">
-                  <span class="label label-default"><button class="btn btn-primary">Read</button></span>
+                  <a [routerLink]=" ['/view/', book.id]">
+                    <span class="label label-default"><button class="btn btn-primary">Read</button></span>
+                  </a>
                 </td>
                 <td class="text-center" style="width: 10%;">
                   <span class="label label-default">
