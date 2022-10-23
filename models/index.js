@@ -20,6 +20,7 @@ tokens = require("./token.model")(sequelize, DataTypes)
 
 users.hasMany(books)
 books.hasMany(tokens)
+tokens.belongsTo(books);
 
 const db = {
   users,

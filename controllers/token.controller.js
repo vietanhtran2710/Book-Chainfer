@@ -1,5 +1,6 @@
 const db = require("../models");
 const Token = db.tokens;
+const Book = db.books;
 const sequelize = db.sequelize
 const { QueryTypes, Op } = require('sequelize');
 
@@ -36,7 +37,14 @@ exports.create = async (req, res) => {
 
 // Retrieve all selling tokens
 exports.getAll = (req, res) => {
-	Token.findAll()
+	Token.findAll(
+        {
+            include: { 
+                model: Book,
+                attributes:['name']
+            },
+            attributes: ['id', 'bookId']
+        })
     .then(data => {
         res.send(data);
     })

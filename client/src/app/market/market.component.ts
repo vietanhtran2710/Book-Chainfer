@@ -14,9 +14,12 @@ export class MarketComponent implements OnInit {
 
   balance: number = 0;
   userAddress: string = '';
+  userSellingTokens: Array<any> = [];
+  otherSellingTokens: Array<any> = [];
 
   constructor(private blockchainService: BlockchainService,
-              private authService: AuthService) { 
+              private authService: AuthService,
+              private tokenService: TokenService) { 
     if (Object.keys(this.authService.currentUserValue).length === 0) {
       window.location.replace('')
     }
@@ -32,6 +35,22 @@ export class MarketComponent implements OnInit {
         .then((result: any) => {
           that.balance = result;
         })
+        this.tokenService.getAll().subscribe(
+          (result: any) => {
+            this.blockchainService.getSellingToken(result)
+            .then((tokens: any) => {
+              console.log(tokens);
+              for (let item of tokens) {
+                if (tokens.owner == this.userAddress) {
+                  this.userSellingTokens.push(item);
+                }
+                else {
+                  this.otherSellingTokens.push(item);
+                }
+              }
+            })
+          }
+        )
       })
     }
   }

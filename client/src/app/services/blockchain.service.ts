@@ -8,10 +8,15 @@ const Web3 = require('web3')
 export class BlockchainService {
 
   private web3: any;
-  private artifacts = require('../../../../build/contracts/NFTOwnership.json');
-  private contractABI = this.artifacts.abi;
-  private contractAddress = this.artifacts.networks["5777"].address
-  private contract: any;
+  private nftArtifacts = require('../../../../build/contracts/NFTOwnership.json');
+  private nftContractABI = this.nftArtifacts.abi;
+  private nftContractAddress = this.nftArtifacts.networks["5777"].address
+  private nftContract: any;
+
+  private pageArtifacts = require('../../../../build/contracts/PageToken.json');
+  private pageContractABI = this.pageArtifacts.abi;
+  private pageContractAddress = this.pageArtifacts.networks["5777"].address
+  private pageContract: any;
 
   constructor() { 
     this.initWeb3();
@@ -19,13 +24,51 @@ export class BlockchainService {
 
   async initWeb3() {
     this.web3 = new Web3(Web3.givenProvider || '"ws://localhost:7545"');
-    this.contract = await new this.web3.eth.Contract(this.contractABI, this.contractAddress);
+    this.nftContract = await new this.web3.eth.Contract(this.nftContractABI, this.nftContractAddress);
+    this.pageContract = await new this.web3.eth.Contract(this.pageContractABI, this.pageContractAddress);
+  }
+
+  async getPageBalance(account: string) {
+    await this.initWeb3();
+    let that = this;
+    return new Promise((resolve, reject) => {
+      that.pageContract.methods.balanceOf(account).call()
+      .then((result: any) => {
+        return resolve(result);
+      })
+    })
+  }
+
+  async getSellingToken(tokens: Array<any>) {
+    await this.initWeb3();
+    let that = this;
+    return new Promise((resolve, reject) => {
+      let promises: Array<Promise<any>> = [];
+      for (let item of tokens) {
+        promises.push(that.nftContract.methods.ownerOf(item.id).call());
+      }
+      Promise.all(promises).then(owners => {
+        for (var i = 0; i < owners.length; i++) {
+          tokens[i].owner = owners[i];
+        }
+        let promises: Array<Promise<any>> = [];
+        for (let item of tokens) {
+          promises.push(that.nftContract.methods.getTokenPrice(item.id).call());
+        }
+        Promise.all(promises).then(prices => {
+          for (var i = 0; i < prices.length; i++) {
+            tokens[i].price = prices[i];
+          }
+          return resolve(tokens);
+        })
+      })
+    })
   }
 
   createBook(name: string, currentAccount: string) {
     let that = this;
     return new Promise((resolve, reject) => {
-      that.contract.methods.createBook(name).send({from: currentAccount})
+      that.nftContract.methods.createBook(name).send({from: currentAccount})
       .then((result: any) => {
         return resolve(result);
       })
@@ -35,7 +78,7 @@ export class BlockchainService {
   authorizeToken(toAddress: string, tokenId: number, right: number, currentAccount: string) {
     let that = this;
     return new Promise((resolve, reject) => {
-      that.contract.methods.transferRight(toAddress, tokenId, right).send({from: currentAccount})
+      that.nftContract.methods.transferRight(toAddress, tokenId, right).send({from: currentAccount})
       .then((result: any) => {
         return resolve(result);
       })
@@ -45,7 +88,7 @@ export class BlockchainService {
   getTokenPrice(tokenId: number) {
     let that = this;
     return new Promise((resolve, reject) => {
-      that.contract.methods.getTokenPrice(tokenId).call()
+      that.nftContract.methods.getTokenPrice(tokenId).call()
       .then((result: any) => {
         return resolve(result);
       })
@@ -55,7 +98,7 @@ export class BlockchainService {
   setTokenPrice(tokenId: number, price: number, account: string) {
     let that = this;
     return new Promise((resolve, reject) => {
-      that.contract.methods.setTokenPrice(tokenId, price).send({from: account})
+      that.nftContract.methods.setTokenPrice(tokenId, price).send({from: account})
       .then((result: any) => {
         return resolve(result);
       })
@@ -72,12 +115,12 @@ export class BlockchainService {
     let that = this;
     await this.initWeb3();
     return new Promise((resolve, reject) => {
-      that.contract.methods.balanceOf(account).call()
+      that.nftContract.methods.balanceOf(account).call()
       .then(function(result: any) {
         let balance = result;
         let promises: Array<Promise<any>> = []
         for (let i = 0; i < balance; i++) {
-          promises.push(that.contract.methods.tokenOfOwnerByIndex(account, i).call());
+          promises.push(that.nftContract.methods.tokenOfOwnerByIndex(account, i).call());
         }
         Promise.all(promises).then(values => {
           let tokensInfo = values.map((id) => {
@@ -87,7 +130,7 @@ export class BlockchainService {
           let promises: Array<Promise<any>> = []
           for (let item of tokensInfo) {
             promises.push(
-              that.contract.methods.getTokenBook(item.tokenId).call()
+              that.nftContract.methods.getTokenBook(item.tokenId).call()
             );
           }
           Promise.all(promises).then(values => {
@@ -97,7 +140,7 @@ export class BlockchainService {
             let promises: Array<Promise<any>> = [];
             for (let item of tokensInfo) {
               promises.push(
-                that.contract.methods.getBookTitle(item.bookId).call()
+                that.nftContract.methods.getBookTitle(item.bookId).call()
               );
             }
             Promise.all(promises).then(titles => {
@@ -107,7 +150,7 @@ export class BlockchainService {
               let promises: Array<Promise<any>> = [];
               for (let item of tokensInfo) {
                 promises.push(
-                  that.contract.methods.getTokenRight(item.tokenId).call()
+                  that.nftContract.methods.getTokenRight(item.tokenId).call()
                 );
               }
               Promise.all(promises).then(rights => {
