@@ -31,17 +31,16 @@ export class HomeComponent implements OnInit {
     if (Object.keys(this.authService.currentUserValue).length === 0) {
       window.location.replace('')
     }
-    else{
-      let that = this;
+    else {
       this.authService.verifyToken().pipe(catchError(err => {
         window.location.replace('')
         return throwError(err);
       })).subscribe((data: any) => {
-        that.userAddress = data.address;
-        that.bookService.getUserBook(that.userAddress).subscribe(
+        this.userAddress = data.address;
+        this.bookService.getUserBook(this.userAddress).subscribe(
           (result: any) => {
-            that.userBooks = result;
-            that.loaded = true;
+            this.userBooks = result;
+            this.loaded = true;
           }
         )
       })
