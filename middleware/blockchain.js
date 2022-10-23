@@ -3,12 +3,13 @@ const key = require('../config/secret-key.json');
 const nftArtifacts = require('../build/contracts/NFTOwnership.json');
 const nftContractABI = nftArtifacts.abi;
 const nftContractAddress = nftArtifacts.networks["5777"].address
+const blockchainConfig = require('../config/blockchain.config.json');
 
 const pageArtifacts = require('../build/contracts/PageToken.json');
 const pageContractABI = pageArtifacts.abi;
 const pageContractAddress = pageArtifacts.networks["5777"].address
 
-this.web3 = new Web3(Web3.givenProvider || "ws://localhost:7545");
+this.web3 = new Web3(Web3.givenProvider || blockchainConfig.url);
 
 exports.verifyUserToken = async (req, res, next) => {
     console.log(req.params);
@@ -62,7 +63,7 @@ exports.transfer = async (to, amount) => {
   const signedTx = await this.web3.eth.accounts.signTransaction(
     {
       data: encodedABI,
-      from: this.adminAddress,
+      from: key.address,
       gas: 2000000,
       to: this.pageContract.options.address,
     },
