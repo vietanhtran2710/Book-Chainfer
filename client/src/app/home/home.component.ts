@@ -38,6 +38,12 @@ export class HomeComponent implements OnInit {
         return throwError(err);
       })).subscribe((data: any) => {
         that.userAddress = data.address;
+        that.bookService.getUserBook(that.userAddress).subscribe(
+          (result: any) => {
+            that.userBooks = result;
+            that.loaded = true;
+          }
+        )
       })
     }
     this.bookModel = this.fb.group({
@@ -61,14 +67,8 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userAddress = this.authService.currentUserValue.address;
     console.log(this.userAddress);
-    this.bookService.getUserBook(this.userAddress).subscribe(
-      (result: any) => {
-        this.userBooks = result;
-        this.loaded = true;
-      }
-    )
+    
   }
 
   fileChosen(event: any) {
