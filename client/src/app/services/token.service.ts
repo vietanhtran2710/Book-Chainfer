@@ -22,4 +22,8 @@ export class TokenService {
   delete(id: number) {
     return this.http.delete(`${baseUrl}/${id}`)
   }
+
+  buyToken(data: any) {
+    return this.http.post(`${baseUrl}/buy`, data)
+  }
 }

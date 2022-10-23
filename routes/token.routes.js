@@ -8,6 +8,9 @@ module.exports = app => {
     // Save and create a new selling token
     router.post("/", authJwt.verifyToken, token.create);
 
+    //Buy token
+    router.post("/buy", authJwt.verifyToken, token.buyToken);
+
     //Get all token currently selling
     router.get("/", authJwt.verifyToken, token.getAll);
 

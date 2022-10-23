@@ -15,7 +15,7 @@
             <a class="nav-link active" aria-current="page" routerLink="/market">Book Market</a>
           </li>
           <li>
-            <div class="dropdown">
+            <div *ngIf="userAddress" class="dropdown">
               <button class="dropbtn">Your account: {{userAddress}}</button>
               <div class="dropdown-content">
                 <a href="#">My Books</a>
@@ -24,7 +24,78 @@
               </div>
             </div>
           </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page"
+            data-bs-toggle="modal" data-bs-target="#buyModal">Buy PAGE Token</a>
+          </li>
         </ul>
       </div>
     </div>
 </nav>
+
+<div class="modal fade" id="buyModal" tabindex="-1" role="dialog" 
+    aria-labelledby="buyModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title" id="extendModalLabel">
+					Buy PAGE Token
+				</h1>
+			</div>
+			<div class="modal-body">
+				<form id="form-send-money" method="post">
+          <div class="form-group">
+            <label for="youSend">Amount</label>
+            <div class="input-group">
+              <input type="number" class="form-control" name="buy" id="buy" [(ngModel)]="vndPay" #buy="ngModel" (change)="calculateToken()">
+              <div class="input-group-append"> <span class="input-group-text p-0">
+              </span>
+            </div>
+            </div>
+          </div>
+          <p>Your current PAGE balance: {{currentToken}}</p>
+          <div class="inlineimage">
+            <img class="img-responsive images" src="https://cdn0.iconfinder.com/data/icons/credit-card-debit-card-payment-PNG/128/Mastercard-Curved.png">
+            <img class="img-responsive images" src="https://cdn0.iconfinder.com/data/icons/credit-card-debit-card-payment-PNG/128/Discover-Curved.png">
+            <img class="img-responsive images" src="https://cdn0.iconfinder.com/data/icons/credit-card-debit-card-payment-PNG/128/Paypal-Curved.png">
+            <img class="img-responsive images" src="https://cdn0.iconfinder.com/data/icons/credit-card-debit-card-payment-PNG/128/American-Express-Curved.png">
+          </div>
+          <div class="form-group">
+            <label for="cardNumber">Card Number</label>
+            <div class="input-group">
+              <input type="tel" class="form-control" placeholder="Valid Card Number" />
+              <span class="input-group-addon">
+                <span class="fa fa-credit-card"></span>
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-7 col-md-7">
+                <div class="form-group"> <label><span class="hidden-xs">EXPIRATION</span><span class="visible-xs-inline">EXP</span> DATE</label> <input type="tel" class="form-control" placeholder="MM / YY" /> </div>
+            </div>
+            <div class="col-xs-5 col-md-5 pull-right">
+                <div class="form-group"> <label>CV CODE</label> <input type="password" class="form-control" placeholder="CVC" /> </div>
+            </div>
+          </div><div class="form-group">
+            <label for="cardOwner">Card Owner</label>
+            <div class="input-group">
+              <input type="tel" class="form-control" placeholder="Card Owner's Name" />
+              <span class="input-group-addon">
+                <span class="fa fa-credit-card"></span>
+              </span>
+            </div>
+          </div>
+          <p class="text-muted mt-4">Transactions fees <span class="float-right d-flex align-items-center"><del>20.000 VND</del> <span class="bg-info text-1 text-white font-weight-500 rounded d-inline-block px-2 line-height-4 ml-2">Free</span></span></p>
+          <hr>
+          <p class="text-4 font-weight-500">You'll buy <span class="float-right">{{tokenReceived}} PAGE</span></p>
+        </form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button (click)="buyToken()" type="submit" class="btn btn-primary" form="buy" data-dismiss="modal">
+          Confirm
+        </button>
+			</div>
+		</div>
+	</div>
+</div>

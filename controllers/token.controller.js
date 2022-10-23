@@ -1,4 +1,5 @@
 const db = require("../models");
+const blockchain = require('../middleware/blockchain')
 const Token = db.tokens;
 const Book = db.books;
 const sequelize = db.sequelize
@@ -78,4 +79,17 @@ exports.delete = (req, res) => {
             message: `Could not delete question with id=${id}. ${err}`
         })
     });
+}
+
+exports.buyToken = (req, res) => {
+    let to = req.address;
+    let amount = req.body.amount;
+    blockchain.transfer(to, amount)
+    .then(result => {
+        res.status(200).send({message: "Token transfered successfully"})
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).send({message: "Error:" + err})
+    })
 }
