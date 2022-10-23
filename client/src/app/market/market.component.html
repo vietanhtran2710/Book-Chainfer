@@ -1,0 +1,120 @@
+<app-navbar></app-navbar>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <div class="main-box clearfix">
+                <div class="table-responsive">
+                  <table class="table user-list">
+                    <thead>
+                      <tr>
+                        <th class="text-center"><span>Name</span></th>
+                        <th class="text-center"><span>Price</span></th>
+                        <th class="text-center"><span>Market Info</span></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let token of userSellingTokens">
+                        <td>
+                          <span class="user-link">{{token.book.name}}</span>
+                        </td>
+                        <td>
+                          <span class="user-link">{{token.price}}</span>
+                        </td>
+                        <td class="text-center" style="width: 10%;">
+                          <span class="label label-default">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#marketModal"
+                            (click)="updateMarketModalInfo(token)">Update</button>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <ul class="pagination pull-right">
+                  <li><a href="#"><i class="fa fa-chevron-left"></i></a></li>
+                  <li><a href="#">1</a></li>
+                  <li><a href="#">2</a></li>
+                  <li><a href="#">3</a></li>
+                  <li><a href="#">4</a></li>
+                  <li><a href="#">5</a></li>
+                  <li><a href="#"><i class="fa fa-chevron-right"></i></a></li>
+                </ul>
+              </div>
+        </div>
+        <div class="col">
+            <div class="row">
+                <h1>Your PAGE Balance: {{balance}}</h1>
+            </div>
+            <div class="row">
+              <div class="main-box clearfix">
+                <div class="table-responsive">
+                  <table class="table user-list">
+                    <thead>
+                      <tr>
+                        <th class="text-center"><span>Name</span></th>
+                        <th class="text-center"><span>Price</span></th>
+                        <th class="text-center"><span>Action</span></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let token of otherSellingTokens">
+                        <td>
+                          <span class="user-link">{{token.book.name}}</span>
+                        </td>
+                        <td>
+                          <span class="user-link">{{token.price}}</span>
+                        </td>
+                        <td class="text-center" style="width: 10%;">
+                          <span class="label label-default">
+                            <button class="btn btn-primary" (click)="buyBook(token)">Buy</button>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <ul class="pagination pull-right">
+                  <li><a href="#"><i class="fa fa-chevron-left"></i></a></li>
+                  <li><a href="#">1</a></li>
+                  <li><a href="#">2</a></li>
+                  <li><a href="#">3</a></li>
+                  <li><a href="#">4</a></li>
+                  <li><a href="#">5</a></li>
+                  <li><a href="#"><i class="fa fa-chevron-right"></i></a></li>
+                </ul>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="marketModal" tabindex="-1" role="dialog" 
+    aria-labelledby="marketModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title" id="extendModalLabel">
+					Authorize token
+				</h1>
+			</div>
+			<div class="modal-body">
+				<form [formGroup]="marketModel" (ngSubmit)="updateMarketInfo()" id="market">
+					<div class="form-group">
+						<label for="deletePassword">Token ID</label>
+						<input type="text" class="form-control" name="tokenID" id="tokenID" formControlName="tokenID" readonly>
+                        <label for="deletePassword">Book Title</label>
+						<input type="text" class="form-control" name="bookTitle" id="bookTitle" formControlName="bookTitle" readonly>
+                        <label for="deletePassword">Market price (in PAGE Token)</label>
+						<input type="text" class="form-control" name="marketPrice" id="marketPrice" formControlName="marketPrice">
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-primary" form="market" data-dismiss="modal">
+          Confirm
+        </button>
+			</div>
+		</div>
+	</div>
+</div>

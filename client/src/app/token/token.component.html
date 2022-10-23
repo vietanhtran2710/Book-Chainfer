@@ -141,7 +141,9 @@
                           <span class="user-link">{{info.bookTitle}}</span>
                       </td>
                       <td *ngIf="userAddress == pageAddress" class="text-center" style="width: 11%;">
-                        <span class="label label-default"><button class="btn btn-primary">Read</button></span>
+                        <a [routerLink]=" ['/view/', info.bookId]">
+                          <span class="label label-default"><button class="btn btn-primary">Read</button></span>
+                        </a>
                       </td>
                     </tr>
                   </tbody>
