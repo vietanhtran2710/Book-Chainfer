@@ -24,12 +24,8 @@ export class MarketComponent implements OnInit {
               private authService: AuthService,
               private tokenService: TokenService,
               private fb: FormBuilder) { 
-    if (Object.keys(this.authService.currentUserValue).length === 0) {
-      window.location.replace('')
-    }
-    else {
+    if (Object.keys(this.authService.currentUserValue).length !== 0) {
       this.authService.verifyToken().pipe(catchError(err => {
-        window.location.replace('')
         return throwError(err);
       })).subscribe((data: any) => {
         this.userAddress = data.address;
