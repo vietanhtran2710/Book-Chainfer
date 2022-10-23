@@ -14,6 +14,7 @@ import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { NavbarComponent } from './navbar/navbar.component';
 import { TokenComponent } from './token/token.component';
 import { ViewComponent } from './view/view.component';
+import { MarketComponent } from './market/market.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ViewComponent } from './view/view.component';
     HomeComponent,
     NavbarComponent,
     TokenComponent,
-    ViewComponent
+    ViewComponent,
+    MarketComponent
   ],
   imports: [
     BrowserModule,
