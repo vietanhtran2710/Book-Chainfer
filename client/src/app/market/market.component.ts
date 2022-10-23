@@ -107,7 +107,27 @@ export class MarketComponent implements OnInit {
   }
 
   buyBook(token: any) {
-
+    console.log(token);
+    Swal.fire({
+      title: 'Are you sure to buy this book?',
+      text: `${token.book.name}; Price: ${token.price}`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, buy this!',
+      cancelButtonText: 'No, cancel!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.blockchainService.buyToken(token.id, this.userAddress)
+        .then(result => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Done',
+            text: `Book bought successfully for reading`
+          })
+        })
+      }
+    })
   }
 
 }

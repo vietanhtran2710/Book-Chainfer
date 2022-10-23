@@ -105,6 +105,16 @@ export class BlockchainService {
     })
   }
 
+  buyToken(tokenId: number, account: string) {
+    let that = this;
+    return new Promise((resolve, reject) => {
+      that.pageContract.methods.buyToken(tokenId).send({from: account})
+      .then((result: any) => {
+        return resolve(result);
+      })
+    })
+  }
+
   async getUserOwnedTokenInfo(account: string) {
     type TokenInfo = {
       tokenId?: number;
