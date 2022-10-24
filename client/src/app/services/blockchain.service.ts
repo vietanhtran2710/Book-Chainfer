@@ -115,6 +115,16 @@ export class BlockchainService {
     })
   }
 
+  getTokenBookId(tokenId: number) {
+    let that = this;
+    return new Promise((resolve, reject) => {
+      that.nftContract.methods.getTokenBook(tokenId).call()
+      .then((result: any) => {
+        return resolve(result);
+      })
+    })
+  }
+
   async getUserOwnedTokenInfo(account: string) {
     type TokenInfo = {
       tokenId?: number;

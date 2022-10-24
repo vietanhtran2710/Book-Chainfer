@@ -84,21 +84,25 @@ export class HomeComponent implements OnInit {
       formData.append('author', this.bookModel.get('author')!.value);
       this.blockchainService.createBook(formData.get('name')!.toString(), this.authService.currentUserValue.address)
       .then((result: any) => {
-        formData.append('id', result.events.Transfer.returnValues.tokenId);
-        this.bookService.uploadBook(formData).subscribe(
-          (result: any) => {
-            if (result.message == "Success") {
-              Swal.fire({
-                icon: 'success',
-                title: 'Done',
-                text: 'Book created successfully'
-              })
-              .then(result => {
-                location.reload();
-              })
+        let tokenId = result.events.Transfer.returnValues.tokenId;
+        this.blockchainService.getTokenBookId(tokenId)
+        .then((bookId: any) => {
+          formData.append('id', bookId);
+          this.bookService.uploadBook(formData).subscribe(
+            (result: any) => {
+              if (result.message == "Success") {
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Done',
+                  text: 'Book created successfully'
+                })
+                .then(result => {
+                  location.reload();
+                })
+              }
             }
-          }
-        )
+          )
+        })        
       })
     }
   }
