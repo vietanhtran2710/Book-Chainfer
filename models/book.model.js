@@ -4,6 +4,9 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             primaryKey: true
         },
+        tokenId: {
+            type: DataTypes.INTEGER,
+        },
         name: {
             allowNull: false,
             type: DataTypes.TEXT,

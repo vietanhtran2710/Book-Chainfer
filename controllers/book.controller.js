@@ -10,6 +10,7 @@ exports.create = async (req, res) => {
         const bookFileLocalPath = path.join(__dirname, `./../files/${req.files[0].filename}`) // directory to save book's file
         const book = {
             id: formData.id,
+            tokenId: formData.tokenId,
             authorName: formData.author,
             name: formData.name,
             fileURI: bookFileLocalPath,

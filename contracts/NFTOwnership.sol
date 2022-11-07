@@ -11,6 +11,8 @@ contract NFTOwnership is ERC721, AccessControl {
 
     enum Right{ OWN, PUBLISH, READ_ONLY }
 
+    event BookTokenCreated(uint256 _tokenID);
+
     // Optional mapping for token URIs - Book rights
     mapping(uint256 => Right) private _tokenRights;
 
@@ -20,17 +22,22 @@ contract NFTOwnership is ERC721, AccessControl {
     // Mapping from book ID to book title
     mapping(uint256 => string) private _bookTitles;
 
-    // Mapping from owner to list of owned token IDs
+    // Mapping from owner address to list of owned token IDs
     mapping(address => mapping(uint256 => uint256)) private _ownedTokens;
 
-    //Mapping from token id to its selling price
+    //Mapping from token ID to its selling price
     mapping(uint256 => uint256) private _tokenPrices;
 
     // Array with all token IDs, used for enumeration
     uint256[] private _allTokens;
 
+    //Number of books in total, used as bookId
     uint256 public bookCount;
+
+    //Mapping from book ID to number of tokens represents that rights on it
     mapping(uint256 => uint256) private _bookTokenCount;
+
+    //Mapping from book ID to token ID to Right
     mapping(uint256 => mapping(uint256 => uint256)) private _bookTokens;
 
     constructor() ERC721("BookOwnership", "BOOK") {
@@ -89,6 +96,7 @@ contract NFTOwnership is ERC721, AccessControl {
         uint256 currentBookId = _tokenBooks[tokenId];
         _addTokenToBook(currentBookId, newTokenId);
         _setTokenRight(newTokenId, bookRight);
+        emit BookTokenCreated(newTokenId);
         return newTokenId;
     }
 

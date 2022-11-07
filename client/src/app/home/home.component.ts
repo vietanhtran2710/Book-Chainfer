@@ -40,6 +40,7 @@ export class HomeComponent implements OnInit {
         this.bookService.getUserBook(this.userAddress).subscribe(
           (result: any) => {
             this.userBooks = result;
+            console.log(result);
             this.loaded = true;
           }
         )
@@ -84,10 +85,13 @@ export class HomeComponent implements OnInit {
       formData.append('author', this.bookModel.get('author')!.value);
       this.blockchainService.createBook(formData.get('name')!.toString(), this.authService.currentUserValue.address)
       .then((result: any) => {
+        console.log(result);
         let tokenId = result.events.Transfer.returnValues.tokenId;
+        console.log(tokenId);
         this.blockchainService.getTokenBookId(tokenId)
         .then((bookId: any) => {
           formData.append('id', bookId);
+          formData.append('tokenId', tokenId);
           this.bookService.uploadBook(formData).subscribe(
             (result: any) => {
               if (result.message == "Success") {
@@ -151,7 +155,7 @@ export class HomeComponent implements OnInit {
     .then((price) => {
       this.marketModel.setValue({
         bookTitle: bookInfo.name, 
-        tokenID: bookInfo.id,
+        tokenID: bookInfo.tokenId,
         author: bookInfo.authorName,
         marketPrice: price
       })
