@@ -13,7 +13,7 @@ module.exports.uploadFile = () => {
 
     const fileFilter = (req, file, cb) => {
         if (!file.originalname.match(/\.(pdf)$/)) {
-            return cb(new Error('You can upload only pdf files'), false);
+            return cb(new Error('Only pdf file is accepted'), false);
         }
         cb(null, true)
     }

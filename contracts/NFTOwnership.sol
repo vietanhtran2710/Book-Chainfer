@@ -22,7 +22,7 @@ contract NFTOwnership is ERC721, AccessControl {
     // Mapping from book ID to book title
     mapping(uint256 => string) private _bookTitles;
 
-    // Mapping from owner address to list of owned token IDs
+    // Mapping from owner address to mapping from tokenID to bookID
     mapping(address => mapping(uint256 => uint256)) private _ownedTokens;
 
     //Mapping from token ID to its selling price

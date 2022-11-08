@@ -1,13 +1,13 @@
 const db = require("../models");
 const path = require('path')
-const Book = db.books // chi phí đăng bài
+const Book = db.books // book cost 
 const sequelize = db.sequelize
 const { Op } = require('sequelize');
 
 exports.create = async (req, res) => {
     try {
         const formData = req.body
-        const bookFileLocalPath = path.join(__dirname, `./../files/${req.files[0].filename}`) // directory to save book's file
+        const bookFileLocalPath = path.join(__dirname, `./../files/${req.files[0].filename}`) // directory to save book's pdf file
         const book = {
             id: formData.id,
             tokenId: formData.tokenId,
