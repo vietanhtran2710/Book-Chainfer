@@ -14,6 +14,10 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" routerLink="/market">Book Market</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page"
+            data-bs-toggle="modal" data-bs-target="#buyModal">Buy PAGE Token</a>
+          </li>
           <li>
             <div *ngIf="userAddress" class="dropdown">
               <button class="dropbtn">Your account: {{userAddress}}</button>
@@ -23,10 +27,6 @@
                 <a class="nav-link" (click)="logOut()" style="color: red;">Logout</a>
               </div>
             </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page"
-            data-bs-toggle="modal" data-bs-target="#buyModal">Buy PAGE Token</a>
           </li>
         </ul>
       </div>
